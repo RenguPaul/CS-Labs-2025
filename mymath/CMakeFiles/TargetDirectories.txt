@@ -1,0 +1,6 @@
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/mymath/CMakeFiles/lab1.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/mymath/CMakeFiles/edit_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/mymath/CMakeFiles/rebuild_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/mymath/mymath/CMakeFiles/mymath.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/mymath/mymath/CMakeFiles/edit_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/mymath/mymath/CMakeFiles/rebuild_cache.dir
