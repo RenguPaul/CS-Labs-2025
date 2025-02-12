@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "planets/planet.h"
+#include "planet/planet.h"
 
 using namespace std;
 
