@@ -1,0 +1,6 @@
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/planet/CMakeFiles/lab_2.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/planet/CMakeFiles/edit_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/planet/CMakeFiles/rebuild_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/planet/planet/CMakeFiles/planet.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/planet/planet/CMakeFiles/edit_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/planet/planet/CMakeFiles/rebuild_cache.dir
