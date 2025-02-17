@@ -4,7 +4,6 @@
 #include <fstream>
 #include <algorithm>
 
-// Конструкторы
 Planet::Planet() : id(-1), name(nullptr), diameter(0), life(0), satellites(0) {
     //std::cout << "Создание планеты по умолчанию" << std::endl;
 }
@@ -45,14 +44,12 @@ Planet::~Planet() {
     delete[] name;
 }
 
-// Геттеры
 int Planet::getId() const { return id; }
 const char* Planet::getName() const { return name; }
 int Planet::getDiameter() const { return diameter; }
 int Planet::getLife() const { return life; }
 int Planet::getSatellites() const { return satellites; }
 
-// Оператор вывода
 std::ostream& operator<<(std::ostream& os, const Planet& planet) {
     os << planet.id << ' '
        << planet.name << ' '
@@ -62,7 +59,7 @@ std::ostream& operator<<(std::ostream& os, const Planet& planet) {
     return os;
 }
 
-// Оператор ввода
+
 std::istream& operator>>(std::istream& is, Planet& planet) {
     if (planet.name != nullptr) {
         delete[] planet.name;
@@ -75,7 +72,7 @@ std::istream& operator>>(std::istream& is, Planet& planet) {
     }
 
     char buffer[100];
-    is >> buffer;  // Считываем только первое слово (имя планеты)
+    is >> buffer;
     size_t len = strlen(buffer);
     planet.name = new char[len + 1];
     strcpy(planet.name, buffer);
@@ -98,7 +95,6 @@ std::istream& operator>>(std::istream& is, Planet& planet) {
     return is;
 }
 
-// Чтение планет из файла
 void readPlanetsFromFile(const char* filename, Planet** planetsArray, int& count) {
     std::ifstream infile(filename);
     if (!infile.is_open()) {
@@ -108,21 +104,16 @@ void readPlanetsFromFile(const char* filename, Planet** planetsArray, int& count
 
     Planet planet;
     while (infile >> planet) {
-        // Создаем новый массив большего размера
         Planet* tmp = new Planet[count + 1];
 
-        // Копируем старые элементы
         for (int i = 0; i < count; ++i) {
             tmp[i] = (*planetsArray)[i];
         }
 
-        // Освобождаем память старого массива
         delete[] *planetsArray;
 
-        // Присваиваем новый массив
         *planetsArray = tmp;
 
-        // Добавляем новый элемент
         (*planetsArray)[count] = planet;
         count++;
     }
@@ -130,7 +121,6 @@ void readPlanetsFromFile(const char* filename, Planet** planetsArray, int& count
     infile.close();
 }
 
-// Запись планет в файл
 void writePlanetsToFile(const char* filename, Planet* planetsArray, int count) {
     std::ofstream outfile(filename);
     if (!outfile.is_open()) {
@@ -145,37 +135,31 @@ void writePlanetsToFile(const char* filename, Planet* planetsArray, int count) {
     outfile.close();
 }
 
-// Сортировка по ID
 void sortPlanetsById(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getId() < b.getId();
     });
 }
 
-// Сортировка по наличию жизни
 void sortPlanetsByLife(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getLife() < b.getLife();
     });
 }
 
-// Сортировка по диаметру
 void sortPlanetsByDiameter(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getDiameter() < b.getDiameter();
     });
 }
 
-// Сортировка по количеству спутников
 void sortPlanetsBySatellites(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getSatellites() < b.getSatellites();
     });
 }
 
-// Удаление планеты по ID
 void deletePlanetById(const char* filename, int id, Planet* planetsArray, int& count) {
-    // Ищем планету с указанным ID
     int index = -1;
     for (int i = 0; i < count; ++i) {
         if (planetsArray[i].getId() == id) {
@@ -189,15 +173,12 @@ void deletePlanetById(const char* filename, int id, Planet* planetsArray, int& c
         return;
     }
 
-    // Сдвигаем элементы массива
     for (int i = index; i < count - 1; ++i) {
         planetsArray[i] = planetsArray[i + 1];
     }
 
-    // Уменьшаем количество планет
     count--;
 
-    // Перезаписываем файл
     writePlanetsToFile(filename, planetsArray, count);
 }
 

@@ -8,17 +8,14 @@ int main() {
 
     showDataBase(filename);
 
-    // Чтение данных из файла
     readPlanetsFromFile(filename, &planets, count);
 
-    // Сортировка по ID
     sortPlanetsByDiameter(planets, count);
     std::cout << "Сортировка по ID:\n";
     for (int i = 0; i < count; ++i) {
         std::cout << planets[i];
     }
 
-    // Удаление планеты с ID = 2
     deletePlanetById(filename, 2, planets, count);
     std::cout << "После удаления планеты с ID = 2:\n";
     for (int i = 0; i < count; ++i) {
@@ -26,7 +23,6 @@ int main() {
     }
     showDataBase(filename);
 
-    // Освобождение памяти
     delete[] planets;
 
     return 0;
