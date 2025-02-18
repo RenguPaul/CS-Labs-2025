@@ -1,29 +1,29 @@
-#include "planet/planet.hpp"
+#include "musicAlbum/musicAlbum.hpp"
 #include <iostream>
 
 int main() {
-    const char* filename = "planets.txt";
-    Planet* planets = nullptr;
+    const char* filename = "musicAlbums.txt";
+    MusicAlbum* MusicAlbums = nullptr;
     int count = 0;
 
     showDataBase(filename);
 
-    readPlanetsFromFile(filename, &planets, count);
+    readAlbumsFromFile(filename, &MusicAlbums, count);
 
-    sortPlanetsByDiameter(planets, count);
+    sortAlbumsById(MusicAlbums, count);
     std::cout << "Сортировка по ID:\n";
     for (int i = 0; i < count; ++i) {
-        std::cout << planets[i];
+        std::cout << MusicAlbums[i];
     }
 
-    deletePlanetById(filename, 2, planets, count);
-    std::cout << "После удаления планеты с ID = 2:\n";
+    deletemusicAlbumById(filename, 2, MusicAlbums, count);
+    std::cout << "После удаления альбома с ID = 2:\n";
     for (int i = 0; i < count; ++i) {
-        std::cout << planets[i];
+        std::cout << MusicAlbums[i];
     }
     showDataBase(filename);
 
-    delete[] planets;
+    delete[] MusicAlbums;
 
     return 0;
 }

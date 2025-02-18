@@ -1,6 +1,0 @@
-/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/musicAlbum/CMakeFiles/lab_2.dir
-/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/musicAlbum/CMakeFiles/edit_cache.dir
-/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/musicAlbum/CMakeFiles/rebuild_cache.dir
-/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/musicAlbum/musicAlbum/CMakeFiles/musicAlbum.dir
-/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/musicAlbum/musicAlbum/CMakeFiles/edit_cache.dir
-/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/musicAlbum/musicAlbum/CMakeFiles/rebuild_cache.dir

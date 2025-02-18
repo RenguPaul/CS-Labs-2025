@@ -1,2 +1,0 @@
-/usr/bin/ar qc libmusicAlbum.a CMakeFiles/musicAlbum.dir/musicAlbum.cpp.o
-/usr/bin/ranlib libmusicAlbum.a

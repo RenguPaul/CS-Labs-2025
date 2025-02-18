@@ -5,17 +5,14 @@ project(${project})
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(${project}_SOURCES
-        main1.cpp)
+set(${project}_SOURCES main.cpp)
 
-add_subdirectory(musicAlbum)
-add_subdirectory(musicAlbum/musicAlbum)
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/musicAlbums.txt
-        ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+add_subdirectory(planet)
 
 set(${project}_SOURCE_LIST
-        ${${project}_SOURCES})
+                ${${project}_SOURCES})
 
 add_executable(${project}
-        ${${project}_SOURCE_LIST})
+            ${${project}_SOURCE_LIST})
+
+target_link_libraries(${project} planet)
