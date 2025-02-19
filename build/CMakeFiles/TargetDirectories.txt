@@ -1,0 +1,9 @@
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles/lab_2.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles/edit_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles/rebuild_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/planet/CMakeFiles/planet.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/planet/CMakeFiles/edit_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/planet/CMakeFiles/rebuild_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/musicAlbum/CMakeFiles/musicAlbum.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/musicAlbum/CMakeFiles/edit_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/musicAlbum/CMakeFiles/rebuild_cache.dir

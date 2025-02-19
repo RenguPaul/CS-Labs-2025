@@ -22,6 +22,17 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const MusicAlbum& MusicAlbum);
     friend std::istream& operator>>(std::istream& is, MusicAlbum& MusicAlbum);
 
+    static void readAlbumsFromFile(const char* filename, MusicAlbum** AlbumsArray, int& count);
+    static void writeAlbumsToFile(const char* filename, MusicAlbum* AlbumsArray, int count);
+    static void sortAlbumsByminutesCount(MusicAlbum *&AlbumsArray, int left, int right);
+    static void sortAlbumsBysongsCount(MusicAlbum *&AlbumsArray, int left, int right);
+    static void sortAlbumsBytracksCount(MusicAlbum *&AlbumsArray, int left, int right);
+    static void deletemusicAlbumById(const char* filename, int id, MusicAlbum* AlbumsArray, int& count);
+    static void showDataBase(const char* filename);
+    static void addAlbumToFile(const char *filename, MusicAlbum &newAlbum);
+    static void editAlbumById(const char *filename, int id, const char *newName, int newSongsCount, int newMinutesCount, int newTracksCount, MusicAlbum *AlbumsArray, int count);
+
+
 private:
     int id;
     char* name;
@@ -29,14 +40,5 @@ private:
     int minutesCount;
     int tracksCount;
 };
-
-void readAlbumsFromFile(const char* filename, MusicAlbum** AlbumsArray, int& count);
-void writeAlbumsToFile(const char* filename, MusicAlbum* AlbumsArray, int count);
-void sortAlbumsById(MusicAlbum* AlbumsArray, int count);
-void sortAlbumsByminutesCount(MusicAlbum* AlbumsArray, int count);
-void sortAlbumsBysongsCount(MusicAlbum* AlbumsArray, int count);
-void sortAlbumsBytracksCount(MusicAlbum* AlbumsArray, int count);
-void deletemusicAlbumById(const char* filename, int id, MusicAlbum* AlbumsArray, int& count);
-void showDataBase(const char* filename);
 
 #endif // MUSICALBUM_HPP

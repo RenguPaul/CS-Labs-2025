@@ -95,7 +95,7 @@ std::istream& operator>>(std::istream& is, Planet& planet) {
     return is;
 }
 
-void readPlanetsFromFile(const char* filename, Planet** planetsArray, int& count) {
+void Planet::readPlanetsFromFile(const char* filename, Planet** planetsArray, int& count) {
     std::ifstream infile(filename);
     if (!infile.is_open()) {
         std::cerr << "Ошибка открытия файла." << std::endl;
@@ -121,7 +121,7 @@ void readPlanetsFromFile(const char* filename, Planet** planetsArray, int& count
     infile.close();
 }
 
-void writePlanetsToFile(const char* filename, Planet* planetsArray, int count) {
+void Planet::writePlanetsToFile(const char* filename, Planet* planetsArray, int count) {
     std::ofstream outfile(filename);
     if (!outfile.is_open()) {
         std::cerr << "Ошибка открытия файла." << std::endl;
@@ -135,31 +135,31 @@ void writePlanetsToFile(const char* filename, Planet* planetsArray, int count) {
     outfile.close();
 }
 
-void sortPlanetsById(Planet* planetsArray, int count) {
+void Planet::sortPlanetsById(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getId() < b.getId();
     });
 }
 
-void sortPlanetsByLife(Planet* planetsArray, int count) {
+void Planet::sortPlanetsByLife(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getLife() < b.getLife();
     });
 }
 
-void sortPlanetsByDiameter(Planet* planetsArray, int count) {
+void Planet::sortPlanetsByDiameter(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getDiameter() < b.getDiameter();
     });
 }
 
-void sortPlanetsBySatellites(Planet* planetsArray, int count) {
+void Planet::sortPlanetsBySatellites(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getSatellites() < b.getSatellites();
     });
 }
 
-void deletePlanetById(const char* filename, int id, Planet* planetsArray, int& count) {
+void Planet::deletePlanetById(const char* filename, int id, Planet* planetsArray, int& count) {
     int index = -1;
     for (int i = 0; i < count; ++i) {
         if (planetsArray[i].getId() == id) {
@@ -182,17 +182,45 @@ void deletePlanetById(const char* filename, int id, Planet* planetsArray, int& c
     writePlanetsToFile(filename, planetsArray, count);
 }
 
-void showDataBase(const char* filename) {
+void Planet::showDataBase(const char *filename) {
     std::ifstream infile(filename);
     if (!infile.is_open()) {
-        std::cerr << "Ошибка открытия файла." << std::endl;
-        return;
+      std::cerr << "Ошибка открытия файла." << std::endl;
+      return;
     }
     std::cout << "Вывод БД" << std::endl;
     Planet planet;
     while (infile >> planet) {
-        std::cout << planet;
+      std::cout << planet;
     }
 
     infile.close();
-}
+  }
+
+  void Planet::addPlanetToFile(const char *filename, Planet &newPlanet) {
+    Planet *planetArray = nullptr;
+    int count = 0;
+    Planet::readPlanetsFromFile(filename, &planetArray, count);
+
+    int maxId = -1;
+    for (int i = 0; i < count; ++i) {
+        if (planetArray[i].getId() > maxId) {
+            maxId = planetArray[i].getId();
+        }
+    }
+
+    newPlanet = Planet(maxId + 1, newPlanet.getName(), newPlanet.getDiameter(),
+                          newPlanet.getLife(), newPlanet.getSatellites());
+
+    Planet *newplanetArray = new Planet[count + 1];
+    for (int i = 0; i < count; ++i) {
+        newplanetArray[i] = planetArray[i];
+    }
+    newplanetArray[count] = newPlanet;
+
+    delete[] planetArray;
+
+    Planet::writePlanetsToFile(filename, newplanetArray, count + 1);
+
+    delete[] newplanetArray;
+  }

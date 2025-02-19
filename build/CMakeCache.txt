@@ -225,6 +225,15 @@ lab_2_IS_TOP_LEVEL:STATIC=ON
 lab_2_SOURCE_DIR:STATIC=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025
 
 //Value Computed by CMake
+musicAlbum_BINARY_DIR:STATIC=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/musicAlbum
+
+//Value Computed by CMake
+musicAlbum_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+musicAlbum_SOURCE_DIR:STATIC=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/musicAlbum
+
+//Value Computed by CMake
 planet_BINARY_DIR:STATIC=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/planet
 
 //Value Computed by CMake
@@ -338,7 +347,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
