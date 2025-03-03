@@ -1,71 +1,82 @@
-#include <iostream>
-#include <cstring>
 #include "fraction/fraction.hpp"
+#include <iostream>
 
-// Функция для демонстрации возможностей класса Fraction
+// Демо-режим
 void demoMode() {
-    std::cout << "=== Демо-режим ===" << std::endl;
+    std::cout << "\n=== Демо-режим ===\n";
 
-    // Создание дробей
-    Fraction frac1(3, 4);
-    Fraction frac2("2 1/2");
-    Fraction frac3("-6/8");
+    Fraction f1("2 3/4");
+    Fraction f2("1/2");
 
-    // Вывод дробей
-    std::cout << "Дробь 1: " << frac1 << std::endl;
-    std::cout << "Дробь 2: " << frac2 << std::endl;
-    std::cout << "Дробь 3: " << frac3 << std::endl;
+    std::cout << "f1 = " << f1 << std::endl;
+    std::cout << "f2 = " << f2 << std::endl;
 
-    // Сокращение дробей
-    std::cout << "\nСокращение дробей:" << std::endl;
-    std::cout << "Дробь 3 после сокращения: " << Fraction(frac3.getNumerator(), frac3.getDenominator()) << std::endl;
+    std::cout << "Сумма: " << f1 + f2 << std::endl;
+    std::cout << "Разность: " << f1 - f2 << std::endl;
+    std::cout << "Произведение: " << f1 * f2 << std::endl;
+    std::cout << "Частное: " << f1 / f2 << std::endl;
 
-    // Ввод дроби с клавиатуры
-    std::cout << "\nВведите дробь в формате a/b или a b/c: ";
-    Fraction frac4;
-    std::cin >> frac4;
-    std::cout << "Вы ввели: " << frac4 << std::endl;
-
-    std::cout << "\n=== Демо-режим завершен ===" << std::endl;
+    std::cout << "f1 == f2: " << (f1 == f2 ? "Да" : "Нет") << std::endl;
+    std::cout << "f1 != f2: " << (f1 != f2 ? "Да" : "Нет") << std::endl;
+    std::cout << "f1 < f2: " << (f1 < f2 ? "Да" : "Нет") << std::endl;
+    std::cout << "f1 > f2: " << (f1 > f2 ? "Да" : "Нет") << std::endl;
+    std::cout << "f1 <= f2: " << (f1 <= f2 ? "Да" : "Нет") << std::endl;
+    std::cout << "f1 >= f2: " << (f1 >= f2 ? "Да" : "Нет") << std::endl;
 }
 
-// Функция для интерактивного режима
+// Интерактивный режим
 void interactiveMode() {
-    std::cout << "=== Интерактивный режим ===" << std::endl;
+    char continueExecution = 'y';
+    while (continueExecution == 'y') {
+    std::cout << "\n=== Интерактивный режим ===\n";
 
-    Fraction frac;
-    while (true) {
-        std::cout << "\nВведите дробь (или 'exit' для выхода): ";
-        char input[50];
-        std::cin >> input;
+    Fraction f1, f2;
 
-        if (strcmp(input, "exit") == 0) {
-            break;
-        }
+    std::cout << "Введите первую дробь (например, 2 3/4 или -3/5): ";
+    std::cin >> f1;
 
-        frac = Fraction(input);
-        std::cout << "Вы ввели: " << frac << std::endl;
-        std::cout << "Числитель: " << frac.getNumerator() << std::endl;
-        std::cout << "Знаменатель: " << frac.getDenominator() << std::endl;
+    std::cout << "Введите вторую дробь (например, 7 2/3 или -4/-7): ";
+    std::cin >> f2;
+
+    std::cout << "Первая дробь: " << f1 << std::endl;
+    std::cout << "Вторая дробь: " << f2 << std::endl;
+
+    std::cout << "Сумма: " << f1 + f2 << std::endl;
+    std::cout << "Разность: " << f1 - f2 << std::endl;
+    std::cout << "Произведение: " << f1 * f2 << std::endl;
+    std::cout << "Частное: " << f1 / f2 << std::endl;
+
+    std::cout << "f1 == f2: " << (f1 == f2 ? "Да" : "Нет") << std::endl;
+    std::cout << "f1 != f2: " << (f1 != f2 ? "Да" : "Нет") << std::endl;
+    std::cout << "f1 < f2: " << (f1 < f2 ? "Да" : "Нет") << std::endl;
+    std::cout << "f1 > f2: " << (f1 > f2 ? "Да" : "Нет") << std::endl;
+    std::cout << "f1 <= f2: " << (f1 <= f2 ? "Да" : "Нет") << std::endl;
+    std::cout << "f1 >= f2: " << (f1 >= f2 ? "Да" : "Нет") << std::endl;
+
+    std::cout << "Хотите продолжить? (y/n)\n\n\n";
+    std::cin >> continueExecution;
     }
-
-    std::cout << "\n=== Интерактивный режим завершен ===" << std::endl;
 }
 
 int main() {
     int choice;
-    std::cout << "Выберите режим:\n"
-              << "1. Демо-режим\n"
-              << "2. Интерактивный режим\n"
-              << "Ваш выбор: ";
+    std::cout << "Выберите режим:\n";
+    std::cout << "1. Интерактивный режим\n";
+    std::cout << "2. Демо-режим\n";
+    std::cout << "Ваш выбор: ";
     std::cin >> choice;
+    std::cin.ignore(); // Игнорируем оставшийся символ новой строки
 
-    if (choice == 1) {
-        demoMode();
-    } else if (choice == 2) {
-        interactiveMode();
-    } else {
-        std::cout << "Неверный выбор. Завершение программы." << std::endl;
+    try {
+        if (choice == 1) {
+            interactiveMode();
+        } else if (choice == 2) {
+            demoMode();
+        } else {
+            std::cout << "Неверный выбор.\n";
+        }
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Ошибка: " << e.what() << std::endl;
     }
 
     return 0;

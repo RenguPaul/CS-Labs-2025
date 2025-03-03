@@ -1,0 +1,6 @@
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles/lab_3.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles/edit_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles/rebuild_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/fraction/CMakeFiles/Fraction.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/fraction/CMakeFiles/edit_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/fraction/CMakeFiles/rebuild_cache.dir

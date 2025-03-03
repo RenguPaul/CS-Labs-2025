@@ -1,29 +1,42 @@
-#ifndef FRACTION_H
-#define FRACTION_H
+#ifndef FRACTION_HPP
+#define FRACTION_HPP
 
 #include <iostream>
+#include <stdexcept>
 
 class Fraction {
 private:
-    int numerator;   // числитель
-    int denominator; // знаменатель
+    int numerator;
+    int denominator;
 
-    void reduce();   // метод для сокращения дроби
-    int gcd(int a, int b); // метод для вычисления НОД
+    int gcd(int a, int b); // Нахождение НОД
+    void reduce();         // Сокращение дроби
 
 public:
-    // Конструкторы
-    Fraction(); // по умолчанию
-    Fraction(int num, int den); // с параметрами
-    Fraction(const char* fractionStr); // из строки (массива char)
-
-    // Перегрузка операторов ввода/вывода
-    friend std::ostream& operator<<(std::ostream& out, const Fraction& frac);
-    friend std::istream& operator>>(std::istream& in, Fraction& frac);
+    Fraction(int num = 0, int denom = 1); // Конструктор
+    Fraction(const char* fractionStr);    // Конструктор из строки
 
     // Геттеры
     int getNumerator() const;
     int getDenominator() const;
+
+    // Арифметические операции
+    Fraction operator+(const Fraction& other) const;
+    Fraction operator-(const Fraction& other) const;
+    Fraction operator*(const Fraction& other) const;
+    Fraction operator/(const Fraction& other) const;
+
+    // Операторы сравнения
+    bool operator==(const Fraction& other) const;
+    bool operator!=(const Fraction& other) const;
+    bool operator<(const Fraction& other) const;
+    bool operator>(const Fraction& other) const;
+    bool operator<=(const Fraction& other) const;
+    bool operator>=(const Fraction& other) const;
+
+    // Дружественные функции для ввода/вывода
+    friend std::istream& operator>>(std::istream& in, Fraction& frac);
+    friend std::ostream& operator<<(std::ostream& out, const Fraction& frac);
 };
 
-#endif // FRACTION_H
+#endif // FRACTION_HPP

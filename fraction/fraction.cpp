@@ -1,54 +1,8 @@
 #include "fraction.hpp"
-#include <cstring> // для работы с функциями strchr, strtok, atoi
-#include <cstdlib> // для abs
+#include <cstring>
+#include <stdexcept>
 
-// Конструктор по умолчанию
-Fraction::Fraction() : numerator(0), denominator(1) {}
-
-// Конструктор с параметрами
-Fraction::Fraction(int num, int den) : numerator(num), denominator(den) {
-    reduce();
-}
-
-// Конструктор из строки (массива char)
-Fraction::Fraction(const char* fractionStr) {
-    char buffer[50]; // Буфер для копирования строки
-    strcpy(buffer, fractionStr);
-
-    // Обработка смешанной дроби (например, "2 3/4")
-    char* spacePos = strchr(buffer, ' ');
-    if (spacePos != nullptr) {
-        // Если есть пробел, это смешанная дробь
-        int wholePart = atoi(buffer); // Целая часть
-        char* fractionPart = spacePos + 1; // Дробная часть
-
-        // Обработка дробной части
-        char* slashPos = strchr(fractionPart, '/');
-        if (slashPos != nullptr) {
-            numerator = atoi(fractionPart);
-            denominator = atoi(slashPos + 1);
-            numerator += wholePart * denominator; // Преобразуем в неправильную дробь
-        } else {
-            // Если дробной части нет, то это целое число
-            numerator = wholePart;
-            denominator = 1;
-        }
-    } else {
-        // Если нет пробела, это простая дробь (например, "3/4" или "3/-4")
-        char* slashPos = strchr(buffer, '/');
-        if (slashPos != nullptr) {
-            numerator = atoi(buffer);
-            denominator = atoi(slashPos + 1);
-        } else {
-            // Если нет слэша, это целое число
-            numerator = atoi(buffer);
-            denominator = 1;
-        }
-    }
-    reduce();
-}
-
-// Метод для вычисления НОД (алгоритм Евклида)
+// Нахождение НОД
 int Fraction::gcd(int a, int b) {
     while (b != 0) {
         int temp = b;
@@ -58,36 +12,139 @@ int Fraction::gcd(int a, int b) {
     return a;
 }
 
-// Метод для сокращения дроби
+// Сокращение дроби
 void Fraction::reduce() {
-    int commonDivisor = gcd(abs(numerator), abs(denominator));
+    int commonDivisor = gcd(numerator, denominator);
     numerator /= commonDivisor;
     denominator /= commonDivisor;
-    if (denominator < 0) {
-        numerator *= -1;
-        denominator *= -1;
+    if (denominator < 0) { // Убедимся, что знаменатель всегда положительный
+        numerator = -numerator;
+        denominator = -denominator;
     }
+}
+
+// Конструктор
+Fraction::Fraction(int num, int denom) : numerator(num), denominator(denom) {
+    if (denominator == 0) {
+        throw std::invalid_argument("Знаменатель не может быть равен нулю.");
+    }
+    reduce();
+}
+
+// Конструктор из строки
+Fraction::Fraction(const char* fractionStr) {
+    char buffer[50]; // Буфер для копирования строки
+    strcpy(buffer, fractionStr);
+
+    // Удаляем лишние пробелы
+    char* start = buffer;
+    while (*start == ' ') start++;
+    char* end = start + strlen(start) - 1;
+    while (end > start && *end == ' ') end--;
+    *(end + 1) = '\0';
+
+    // Обработка смешанной дроби
+    char* spacePos = strchr(start, ' ');
+    if (spacePos != nullptr) {
+        int wholePart = atoi(start);
+        char* fractionPart = spacePos + 1;
+        while (*fractionPart == ' ') fractionPart++;
+
+        char* slashPos = strchr(fractionPart, '/');
+        if (slashPos != nullptr) {
+            numerator = atoi(fractionPart);
+            denominator = atoi(slashPos + 1);
+            if (denominator == 0) {
+                throw std::invalid_argument("Знаменатель не может быть равен нулю.");
+            }
+            numerator += wholePart * denominator;
+        } else {
+            numerator = wholePart;
+            denominator = 1;
+        }
+    } else {
+        char* slashPos = strchr(start, '/');
+        if (slashPos != nullptr) {
+            numerator = atoi(start);
+            denominator = atoi(slashPos + 1);
+            if (denominator == 0) {
+                throw std::invalid_argument("Знаменатель не может быть равен нулю.");
+            }
+        } else {
+            numerator = atoi(start);
+            denominator = 1;
+        }
+    }
+    reduce();
+}
+
+// Геттеры
+int Fraction::getNumerator() const { return numerator; }
+int Fraction::getDenominator() const { return denominator; }
+
+// Арифметические операции
+Fraction Fraction::operator+(const Fraction& other) const {
+    int newNumerator = numerator * other.denominator + other.numerator * denominator;
+    int newDenominator = denominator * other.denominator;
+    return Fraction(newNumerator, newDenominator);
+}
+
+Fraction Fraction::operator-(const Fraction& other) const {
+    int newNumerator = numerator * other.denominator - other.numerator * denominator;
+    int newDenominator = denominator * other.denominator;
+    return Fraction(newNumerator, newDenominator);
+}
+
+Fraction Fraction::operator*(const Fraction& other) const {
+    int newNumerator = numerator * other.numerator;
+    int newDenominator = denominator * other.denominator;
+    return Fraction(newNumerator, newDenominator);
+}
+
+Fraction Fraction::operator/(const Fraction& other) const {
+    if (other.numerator == 0) {
+        throw std::invalid_argument("Деление на ноль невозможно.");
+    }
+    int newNumerator = numerator * other.denominator;
+    int newDenominator = denominator * other.numerator;
+    return Fraction(newNumerator, newDenominator);
+}
+
+// Операторы сравнения
+bool Fraction::operator==(const Fraction& other) const {
+    return numerator == other.numerator && denominator == other.denominator;
+}
+
+bool Fraction::operator!=(const Fraction& other) const {
+    return !(*this == other);
+}
+
+bool Fraction::operator<(const Fraction& other) const {
+    return numerator * other.denominator < other.numerator * denominator;
+}
+
+bool Fraction::operator>(const Fraction& other) const {
+    return numerator * other.denominator > other.numerator * denominator;
+}
+
+bool Fraction::operator<=(const Fraction& other) const {
+    return *this < other || *this == other;
+}
+
+bool Fraction::operator>=(const Fraction& other) const {
+    return *this > other || *this == other;
+}
+
+// Перегрузка оператора ввода
+std::istream& operator>>(std::istream& in, Fraction& frac) {
+    char input[50];
+    in.getline(input, 50);
+    frac = Fraction(input);
+    return in;
 }
 
 // Перегрузка оператора вывода
 std::ostream& operator<<(std::ostream& out, const Fraction& frac) {
     out << frac.numerator << "/" << frac.denominator;
     return out;
-}
-
-// Перегрузка оператора ввода
-std::istream& operator>>(std::istream& in, Fraction& frac) {
-    char input[50];
-    in >> input;
-    frac = Fraction(input);
-    return in;
-}
-
-// Геттеры
-int Fraction::getNumerator() const {
-    return numerator;
-}
-
-int Fraction::getDenominator() const {
-    return denominator;
 }
