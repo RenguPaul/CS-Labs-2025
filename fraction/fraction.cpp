@@ -1,4 +1,4 @@
-#include "Fraction.h"
+#include "fraction.hpp"
 #include <cstring> // для работы с функциями strchr, strtok, atoi
 #include <cstdlib> // для abs
 

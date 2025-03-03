@@ -1,5 +1,6 @@
 #include <iostream>
-#include "Fraction.h"
+#include <cstring>
+#include "fraction/fraction.hpp"
 
 // Функция для демонстрации возможностей класса Fraction
 void demoMode() {
