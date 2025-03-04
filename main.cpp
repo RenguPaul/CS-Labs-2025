@@ -1,7 +1,6 @@
 #include "fraction/fraction.hpp"
 #include <iostream>
 
-// Демо-режим
 void demoMode() {
     std::cout << "\n=== Демо-режим ===\n";
 
@@ -24,7 +23,6 @@ void demoMode() {
     std::cout << "f1 >= f2: " << (f1 >= f2 ? "Да" : "Нет") << std::endl;
 }
 
-// Интерактивный режим
 void interactiveMode() {
     char continueExecution = 'y';
     while (continueExecution == 'y') {
@@ -65,7 +63,7 @@ int main() {
     std::cout << "2. Демо-режим\n";
     std::cout << "Ваш выбор: ";
     std::cin >> choice;
-    std::cin.ignore(); // Игнорируем оставшийся символ новой строки
+    std::cin.ignore();
 
     try {
         if (choice == 1) {
