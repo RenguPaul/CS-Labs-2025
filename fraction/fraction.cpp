@@ -1,8 +1,10 @@
 #include "fraction.hpp"
 #include <cstring>
 #include <stdexcept>
+#include <cctype>
+#include <cmath>
 
-int Fraction::gcd(int a, int b) {
+int Fraction::gcd(int a, int b) const {
     while (b != 0) {
         int temp = b;
         b = a % b;
@@ -21,11 +23,26 @@ void Fraction::reduce() {
     }
 }
 
+Fraction::Fraction() : numerator(0), denominator(1) {}
 
 Fraction::Fraction(int num, int denom) : numerator(num), denominator(denom) {
     if (denominator == 0) {
         throw std::invalid_argument("Знаменатель не может быть равен нулю.");
     }
+    reduce();
+}
+
+Fraction::Fraction(double value) {
+    const double epsilon = 1.0e-6;
+    double integral = std::floor(value);
+    double fractional = value - integral;
+
+    denominator = 1;
+    while (std::fabs(fractional - std::round(fractional)) > epsilon) {
+        fractional *= 10;
+        denominator *= 10;
+    }
+    numerator = static_cast<int>(std::round(integral * denominator + fractional));
     reduce();
 }
 
@@ -38,6 +55,18 @@ Fraction::Fraction(const char* fractionStr) {
     char* end = start + strlen(start) - 1;
     while (end > start && *end == ' ') end--;
     *(end + 1) = '\0';
+
+    for (char* p = start; *p; ++p) {
+        if (!isdigit(*p) && *p != '-' && *p != '/' && *p != ' ') {
+            throw std::invalid_argument("Строка содержит недопустимые символы.");
+        }
+    }
+
+    bool isNegative = false;
+    if (*start == '-') {
+        isNegative = true;
+        start++;
+    }
 
     char* spacePos = strchr(start, ' ');
     if (spacePos != nullptr) {
@@ -70,15 +99,23 @@ Fraction::Fraction(const char* fractionStr) {
             denominator = 1;
         }
     }
+
+    if (isNegative) {
+        numerator = -numerator;
+    }
+
     reduce();
 }
+
+Fraction::Fraction(const Fraction& other)
+    : numerator(other.numerator), denominator(other.denominator) {}
 
 int Fraction::getNumerator() const { return numerator; }
 int Fraction::getDenominator() const { return denominator; }
 
-Fraction Fraction::operator+(const Fraction& other) const {
-    int newNumerator = numerator * other.denominator + other.numerator * denominator;
-    int newDenominator = denominator * other.denominator;
+Fraction operator+(const Fraction& lhs, const Fraction& rhs) {
+    int newNumerator = lhs.numerator * rhs.denominator + rhs.numerator * lhs.denominator;
+    int newDenominator = lhs.denominator * rhs.denominator;
     return Fraction(newNumerator, newDenominator);
 }
 
@@ -101,6 +138,104 @@ Fraction Fraction::operator/(const Fraction& other) const {
     int newNumerator = numerator * other.denominator;
     int newDenominator = denominator * other.numerator;
     return Fraction(newNumerator, newDenominator);
+}
+
+Fraction Fraction::operator+(int value) const {
+    return *this + Fraction(value);
+}
+
+Fraction Fraction::operator-(int value) const {
+    return *this - Fraction(value);
+}
+
+Fraction Fraction::operator*(int value) const {
+    return *this * Fraction(value);
+}
+
+Fraction Fraction::operator/(int value) const {
+    if (value == 0) {
+        throw std::invalid_argument("Деление на ноль невозможно.");
+    }
+    return *this / Fraction(value);
+}
+
+Fraction Fraction::operator+(double value) const {
+    return *this + Fraction(value);
+}
+
+Fraction Fraction::operator-(double value) const {
+    return *this - Fraction(value);
+}
+
+Fraction Fraction::operator*(double value) const {
+    return *this * Fraction(value);
+}
+
+Fraction Fraction::operator/(double value) const {
+    if (value == 0) {
+        throw std::invalid_argument("Деление на ноль невозможно.");
+    }
+    return *this / Fraction(value);
+}
+
+Fraction& Fraction::operator+=(const Fraction& other) {
+    *this = *this + other;
+    return *this;
+}
+
+Fraction& Fraction::operator-=(const Fraction& other) {
+    *this = *this - other;
+    return *this;
+}
+
+Fraction& Fraction::operator*=(const Fraction& other) {
+    *this = *this * other;
+    return *this;
+}
+
+Fraction& Fraction::operator/=(const Fraction& other) {
+    *this = *this / other;
+    return *this;
+}
+
+Fraction& Fraction::operator+=(int value) {
+    *this = *this + Fraction(value);
+    return *this;
+}
+
+Fraction& Fraction::operator-=(int value) {
+    *this = *this - Fraction(value);
+    return *this;
+}
+
+Fraction& Fraction::operator*=(int value) {
+    *this = *this * Fraction(value);
+    return *this;
+}
+
+Fraction& Fraction::operator/=(int value) {
+    *this = *this / Fraction(value);
+    return *this;
+}
+
+Fraction& Fraction::operator+=(double value) {
+    *this = *this + Fraction(value);
+    return *this;
+}
+
+Fraction& Fraction::operator-=(double value) {
+    *this = *this - Fraction(value);
+    return *this;
+}
+
+Fraction& Fraction::operator*=(double value) {
+    *this = *this * Fraction(value);
+    return *this;
+}
+
+Fraction& Fraction::operator/=(double value) {
+    *this = *this / Fraction(value);
+    return *this;
 }
 
 bool Fraction::operator==(const Fraction& other) const {
@@ -127,6 +262,10 @@ bool Fraction::operator>=(const Fraction& other) const {
     return *this > other || *this == other;
 }
 
+Fraction::operator double() const {
+    return static_cast<double>(numerator) / denominator;
+}
+
 std::istream& operator>>(std::istream& in, Fraction& frac) {
     char input[50];
     in.getline(input, 50);
@@ -135,6 +274,23 @@ std::istream& operator>>(std::istream& in, Fraction& frac) {
 }
 
 std::ostream& operator<<(std::ostream& out, const Fraction& frac) {
-    out << frac.numerator << "/" << frac.denominator;
+    if (frac.denominator == 1) {
+        out << frac.numerator;
+    } else if (frac.numerator > frac.denominator) {
+        int wholePart = frac.numerator / frac.denominator;
+        int remainder = frac.numerator % frac.denominator;
+        out << wholePart << " " << remainder << "/" << frac.denominator;
+    } else {
+        out << frac.numerator << "/" << frac.denominator;
+    }
     return out;
+}
+
+Fraction operator+(int value, const Fraction& frac) {
+    return Fraction(value) + frac;
+}
+
+
+Fraction operator+(double value, const Fraction& frac) {
+    return Fraction(value) + frac;
 }
