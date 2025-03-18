@@ -78,6 +78,7 @@ int main(int argc, char* argv[]) {
                     if (count > 0) {
                         std::cout << "Сортировка БД по песням\n";
                         MusicAlbum::sortAlbumsBysongsCount(musicAlbums, 0, count - 1);
+                        MusicAlbum::writeAlbumsToFile(filename, musicAlbums, count);
                     } else {
                         std::cout << "База данных пуста. Сортировка невозможна.\n";
                     }
@@ -86,6 +87,7 @@ int main(int argc, char* argv[]) {
                     if (count > 0) {
                         std::cout << "Сортировка БД по минутам\n";
                         MusicAlbum::sortAlbumsByminutesCount(musicAlbums, 0, count - 1);
+                        MusicAlbum::writeAlbumsToFile(filename, musicAlbums, count);
                     } else {
                         std::cout << "База данных пуста. Сортировка невозможна.\n";
                     }
@@ -94,6 +96,7 @@ int main(int argc, char* argv[]) {
                     if (count > 0) {
                         std::cout << "Сортировка БД по трекам\n";
                         MusicAlbum::sortAlbumsBytracksCount(musicAlbums, 0, count - 1);
+                        MusicAlbum::writeAlbumsToFile(filename, musicAlbums, count);
                     } else {
                         std::cout << "База данных пуста. Сортировка невозможна.\n";
                     }
@@ -101,7 +104,8 @@ int main(int argc, char* argv[]) {
                 case (6):
                     if (count > 0) {
                         std::cout << "Сортировка БД по ID\n";
-                        MusicAlbum::sortAlbumsById(musicAlbums, 0, count - 1);
+                        /*MusicAlbum::sortAlbumsById(musicAlbums, 0, count - 1);
+                        MusicAlbum::writeAlbumsToFile(filename, musicAlbums, count);*/
                     } else {
                         std::cout << "База данных пуста. Сортировка невозможна.\n";
                     }
