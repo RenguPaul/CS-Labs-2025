@@ -57,7 +57,7 @@ Fraction::Fraction(const char* fractionStr) {
     *(end + 1) = '\0';
 
     for (char* p = start; *p; ++p) {
-        if (!isdigit(*p) && *p != '-' && *p != '/' && *p != ' ') {
+        if (!isdigit(*p) && *p != '-' && *p != '/' && *p != ' ' && *p != '.') {
             throw std::invalid_argument("Строка содержит недопустимые символы.");
         }
     }
@@ -95,8 +95,15 @@ Fraction::Fraction(const char* fractionStr) {
                 throw std::invalid_argument("Знаменатель не может быть равен нулю.");
             }
         } else {
-            numerator = atoi(start);
-            denominator = 1;
+            char* dotPos = strchr(start, '.');
+            if (dotPos != nullptr) {
+                int decimalPlaces = strlen(dotPos + 1);
+                numerator = atoi(start) * pow(10, decimalPlaces) + atoi(dotPos + 1);
+                denominator = pow(10, decimalPlaces);
+            } else {
+                numerator = atoi(start);
+                denominator = 1;
+            }
         }
     }
 

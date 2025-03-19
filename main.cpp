@@ -26,7 +26,7 @@ void demoMode() {
     std::cin >> z;
     std::cout << "z=" << z << std::endl;
     // проверка конструкторов
-    Fraction fr1(10, 0), fr2;
+    Fraction fr1, fr2;
     std::cout << "fr2=" << fr2 << std::endl;
     std::cout << "fr1=" << fr1 << std::endl;
     Fraction fr = "-1 4/8";
