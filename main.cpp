@@ -3,6 +3,15 @@
 #include <iostream>
 #include <limits> // Для std::numeric_limits
 
+enum class Options : int {
+    ReadDB = 1,
+    AddElement = 2,
+    SortDB = 3,
+    DeleteElement = 4,
+    EditElement = 5,
+    WriteDB = 6
+};
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Ошибка: Не указан режим работы. Используйте 'd' для демо-режима или 'i' для интерактивного режима.\n";
@@ -21,7 +30,7 @@ int main(int argc, char* argv[]) {
 
         Planet::readPlanetsFromFile(filename, &Planets, count);
 
-        Planet::sortPlanetsByDiameter(Planets, count);
+        Planet::sortPlanetsByDiameter(Planets, 0, count - 1);
         std::cout << "Сортировка по диаметру:\n";
         for (int i = 0; i < count; ++i) {
             std::cout << Planets[i];
@@ -51,12 +60,10 @@ int main(int argc, char* argv[]) {
             std::cout << "Выберите, что хотите сделать:\n";
             std::cout << "1 Прочитать БД\n";
             std::cout << "2 Добавить элемент в БД\n";
-            std::cout << "3 Отсортировать БД (по песням)\n";
-            std::cout << "4 Отсортировать БД (по минутам)\n";
-            std::cout << "5 Отсортировать БД (по трекам)\n";
-            std::cout << "6 Отсортировать БД (по ID)\n";
-            std::cout << "7 Удалить элемент в БД по ID\n";
-            std::cout << "8 Отредактировать элемент в БД по ID\n";
+            std::cout << "3 Отсортировать БД (по минутамы)\n";
+            std::cout << "4 Удалить элемент в БД по ID\n";
+            std::cout << "5 Отредактировать элемент в БД по ID\n";
+            std::cout << "6 Записать объекты в БД\n";
             int choice{};
             if (!(std::cin >> choice)) {
                 std::cin.clear();
@@ -66,58 +73,35 @@ int main(int argc, char* argv[]) {
             }
 
             switch (choice) {
-                case (1):
+                case static_cast<int>(Options::ReadDB):
                     MusicAlbum::showDataBase(filename);
                     break;
-                case (2):
+                case static_cast<int>(Options::AddElement):
                     std::cout << "Введите название альбома, количество песен, количество минут и треков:\n";
                     std::cin >> newMusicAlbum;
-                    MusicAlbum::addAlbumToFile(filename, newMusicAlbum);
+                    MusicAlbum::addAlbumToFile(filename, newMusicAlbum, musicAlbums, count);
                     break;
-                case (3):
+                case static_cast<int>(Options::SortDB):
                     if (count > 0) {
-                        std::cout << "Сортировка БД по песням\n";
-                        MusicAlbum::sortAlbumsBysongsCount(musicAlbums, 0, count - 1);
-                        MusicAlbum::writeAlbumsToFile(filename, musicAlbums, count);
-                    } else {
-                        std::cout << "База данных пуста. Сортировка невозможна.\n";
-                    }
-                    break;
-                case (4):
-                    if (count > 0) {
-                        std::cout << "Сортировка БД по минутам\n";
+                        std::cout << "Сортировка БД по количеству песен\n";
                         MusicAlbum::sortAlbumsByminutesCount(musicAlbums, 0, count - 1);
                         MusicAlbum::writeAlbumsToFile(filename, musicAlbums, count);
                     } else {
                         std::cout << "База данных пуста. Сортировка невозможна.\n";
                     }
                     break;
-                case (5):
-                    if (count > 0) {
-                        std::cout << "Сортировка БД по трекам\n";
-                        MusicAlbum::sortAlbumsBytracksCount(musicAlbums, 0, count - 1);
-                        MusicAlbum::writeAlbumsToFile(filename, musicAlbums, count);
-                    } else {
-                        std::cout << "База данных пуста. Сортировка невозможна.\n";
-                    }
-                    break;
-                case (6):
-                    if (count > 0) {
-                        std::cout << "Сортировка БД по ID\n";
-                        /*MusicAlbum::sortAlbumsById(musicAlbums, 0, count - 1);
-                        MusicAlbum::writeAlbumsToFile(filename, musicAlbums, count);*/
-                    } else {
-                        std::cout << "База данных пуста. Сортировка невозможна.\n";
-                    }
-                    break;
-                case (7): {
+                case static_cast<int>(Options::DeleteElement): {
                     std::cout << "Введите ID для удаления:\n";
                     int id = 0;
                     std::cin >> id;
-                    MusicAlbum::deletemusicAlbumById(filename, id, musicAlbums, count);
+                    if (id >= 0 && id < count) {
+                        MusicAlbum::deletemusicAlbumById(filename, id, musicAlbums, count);
+                    } else {
+                        std::cout << "Ошибка: Неверный ID.\n";
+                    }
                     break;
                 }
-                case (8): {
+                case static_cast<int>(Options::EditElement): {
                     std::cout << "Введите ID объекта, которого хотите изменить, а потом название, количество песен, количество минут и количество треков:\n";
                     int id{};
                     char name[100];
@@ -126,9 +110,18 @@ int main(int argc, char* argv[]) {
                     int tracks{};
                     std::cout << "Введите в формате: id name songs minutes tracks\n";
                     std::cin >> id >> name >> songs >> minutes >> tracks;
-                    MusicAlbum::editAlbumById(filename, id, name, songs, minutes, tracks, musicAlbums, count);
-                    MusicAlbum::showDataBase(filename);
+                    if (id >= 0 && id < count) {
+                        MusicAlbum::editAlbumById(filename, id, name, songs, minutes, tracks, musicAlbums, count);
+                        MusicAlbum::showDataBase(filename);
+                    } else {
+                        std::cout << "Ошибка: Неверный ID.\n";
+                    }
+                    break;
                 }
+                case static_cast<int>(Options::WriteDB):
+                    MusicAlbum::writeAlbumsToFile(filename, musicAlbums, count);
+                    std::cout << "Объекты записаны в файл\n";
+                    break;
                 default:
                     std::cout << "Неверный выбор. Попробуйте снова.\n";
                     break;

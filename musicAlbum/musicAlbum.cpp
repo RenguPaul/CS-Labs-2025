@@ -147,18 +147,18 @@ void MusicAlbum::sortAlbumsByminutesCount(MusicAlbum *&AlbumsArray, int left, in
     if (left > right) {
       return;
     }
-    double middle = AlbumsArray[(left + right) / 2].getMinutesCount();
+    MusicAlbum middle = AlbumsArray[(left + right) / 2];
     int i = left;
     int j = right;
     while (i <= j) {
-      while (AlbumsArray[i].getMinutesCount() < middle) {
+      while (AlbumsArray[i] < middle) {
         ++i;
       }
-      while (AlbumsArray[j].getMinutesCount() > middle) {
+      while (AlbumsArray[j] > middle) {
         --j;
       }
       if (i <= j) {
-        if (AlbumsArray[i].getMinutesCount() != AlbumsArray[j].getMinutesCount()) {
+        if (AlbumsArray[i] != AlbumsArray[j]) {
           MusicAlbum temp(AlbumsArray[i]);
           AlbumsArray[i] = AlbumsArray[j];
           AlbumsArray[j] = temp;
@@ -171,7 +171,7 @@ void MusicAlbum::sortAlbumsByminutesCount(MusicAlbum *&AlbumsArray, int left, in
     sortAlbumsByminutesCount(AlbumsArray, i, right);
   }
 
-void MusicAlbum::sortAlbumsBysongsCount(MusicAlbum *&AlbumsArray, int left, int right) {
+/*void MusicAlbum::sortAlbumsBysongsCount(MusicAlbum *&AlbumsArray, int left, int right) {
     if (left > right) {
         return;
       }
@@ -225,7 +225,7 @@ void MusicAlbum::sortAlbumsBytracksCount(MusicAlbum *&AlbumsArray, int left, int
       }
       sortAlbumsBytracksCount(AlbumsArray, left, j);
       sortAlbumsBytracksCount(AlbumsArray, i, right);
-}
+}*/
 
 void MusicAlbum::deletemusicAlbumById(const char *filename, int id,
                                       MusicAlbum *AlbumsArray, int &count) {
@@ -248,13 +248,9 @@ void MusicAlbum::deletemusicAlbumById(const char *filename, int id,
 
   count--;
 
-  writeAlbumsToFile(filename, AlbumsArray, count);
 }
 
-void MusicAlbum::addAlbumToFile(const char *filename, MusicAlbum &newAlbum) {
-  MusicAlbum *albumsArray = nullptr;
-  int count = 0;
-  readAlbumsFromFile(filename, &albumsArray, count);
+void MusicAlbum::addAlbumToFile(const char *filename, MusicAlbum &newAlbum, MusicAlbum* albumsArray, int& count) {
 
   int maxId = -1;
   for (int i = 0; i < count; ++i) {
@@ -271,10 +267,11 @@ void MusicAlbum::addAlbumToFile(const char *filename, MusicAlbum &newAlbum) {
       newAlbumsArray[i] = albumsArray[i];
   }
   newAlbumsArray[count] = newAlbum;
+  albumsArray = newAlbumsArray;
 
   delete[] albumsArray;
+  albumsArray = newAlbumsArray;
 
-  writeAlbumsToFile(filename, newAlbumsArray, count + 1);
 
   delete[] newAlbumsArray;
 }
@@ -316,6 +313,4 @@ void MusicAlbum::editAlbumById(const char *filename, int id, const char *newName
   AlbumsArray[index].songsCount = newSongsCount;
   AlbumsArray[index].minutesCount = newMinutesCount;
   AlbumsArray[index].tracksCount = newTracksCount;
-
-  writeAlbumsToFile(filename, AlbumsArray, count);
 }

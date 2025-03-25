@@ -19,17 +19,30 @@ public:
     int getMinutesCount() const;
     int getTracksCount() const;
 
+    bool operator>(const MusicAlbum& album) const {
+        return this->getMinutesCount() > album.getMinutesCount();
+    }
+    bool operator<(const MusicAlbum& album) const {
+        return !(this->getMinutesCount() > album.getMinutesCount());
+    }
+    bool operator==(const MusicAlbum& album) const {
+        return this->getMinutesCount() == album.getMinutesCount();
+    }
+    bool operator!=(const MusicAlbum& album) const {
+        return !(this->getMinutesCount() == album.getMinutesCount());
+    }
+
     friend std::ostream& operator<<(std::ostream& os, const MusicAlbum& MusicAlbum);
     friend std::istream& operator>>(std::istream& is, MusicAlbum& MusicAlbum);
 
     static void readAlbumsFromFile(const char* filename, MusicAlbum** AlbumsArray, int& count);
     static void writeAlbumsToFile(const char* filename, MusicAlbum* AlbumsArray, int count);
     static void sortAlbumsByminutesCount(MusicAlbum *&AlbumsArray, int left, int right);
-    static void sortAlbumsBysongsCount(MusicAlbum *&AlbumsArray, int left, int right);
-    static void sortAlbumsBytracksCount(MusicAlbum *&AlbumsArray, int left, int right);
+    /*static void sortAlbumsBysongsCount(MusicAlbum *&AlbumsArray, int left, int right);
+    static void sortAlbumsBytracksCount(MusicAlbum *&AlbumsArray, int left, int right);*/
     static void deletemusicAlbumById(const char* filename, int id, MusicAlbum* AlbumsArray, int& count);
     static void showDataBase(const char* filename);
-    static void addAlbumToFile(const char *filename, MusicAlbum &newAlbum);
+    static void addAlbumToFile(const char *filename, MusicAlbum &newAlbum, MusicAlbum* albumsArray, int& count);
     static void editAlbumById(const char *filename, int id, const char *newName, int newSongsCount, int newMinutesCount, int newTracksCount, MusicAlbum *AlbumsArray, int count);
 
 

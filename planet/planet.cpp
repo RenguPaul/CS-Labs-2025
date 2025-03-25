@@ -135,7 +135,7 @@ void Planet::writePlanetsToFile(const char* filename, Planet* planetsArray, int 
     outfile.close();
 }
 
-void Planet::sortPlanetsById(Planet* planetsArray, int count) {
+/*void Planet::sortPlanetsById(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getId() < b.getId();
     });
@@ -145,19 +145,41 @@ void Planet::sortPlanetsByLife(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getLife() < b.getLife();
     });
+}*/
+
+void Planet::sortPlanetsByDiameter(Planet*& planetsArray, int left, int right) {
+    if (left > right) {
+        return;
+      }
+      Planet middle = planetsArray[(left + right) / 2];
+      int i = left;
+      int j = right;
+      while (i <= j) {
+        while (planetsArray[i] < middle) {
+          ++i;
+        }
+        while (planetsArray[j] > middle) {
+          --j;
+        }
+        if (i <= j) {
+          if (planetsArray[i].getDiameter() != planetsArray[j].getDiameter()) {
+            Planet temp(planetsArray[i]);
+            planetsArray[i] = planetsArray[j];
+            planetsArray[j] = temp;
+          }
+          ++i;
+          --j;
+        }
+      }
+      sortPlanetsByDiameter(planetsArray, left, j);
+      sortPlanetsByDiameter(planetsArray, i, right);
 }
 
-void Planet::sortPlanetsByDiameter(Planet* planetsArray, int count) {
-    std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
-        return a.getDiameter() < b.getDiameter();
-    });
-}
-
-void Planet::sortPlanetsBySatellites(Planet* planetsArray, int count) {
+/*void Planet::sortPlanetsBySatellites(Planet* planetsArray, int count) {
     std::sort(planetsArray, planetsArray + count, [](const Planet& a, const Planet& b) {
         return a.getSatellites() < b.getSatellites();
     });
-}
+}*/
 
 void Planet::deletePlanetById(const char* filename, int id, Planet* planetsArray, int& count) {
     int index = -1;
@@ -223,4 +245,30 @@ void Planet::showDataBase(const char *filename) {
     Planet::writePlanetsToFile(filename, newplanetArray, count + 1);
 
     delete[] newplanetArray;
+  }
+
+  void Planet::editPlanetById(const char *filename, int id, const char *newName, int newDiameter, int newLife, int newSatelites, Planet *planetsArray, int count) {
+    int index = -1;
+    for (int i = 0; i < count; ++i) {
+        if (planetsArray[i].getId() == id) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        std::cerr << "Альбом с ID " << id << " не найден." << std::endl;
+        return;
+    }
+
+    if (newName != nullptr) {
+        delete[] planetsArray[index].name;
+        planetsArray[index].name = new char[strlen(newName) + 1];
+        strcpy(planetsArray[index].name, newName);
+    }
+    planetsArray[index].diameter = newDiameter;
+    planetsArray[index].life = newLife;
+    planetsArray[index].satellites = newSatelites;
+
+    writePlanetsToFile(filename, planetsArray, count);
   }
