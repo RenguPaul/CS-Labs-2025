@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "string_view": "cpp",
-        "streambuf": "cpp"
+        "streambuf": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp"
     }
 }
