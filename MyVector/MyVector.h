@@ -4,6 +4,10 @@
 #include <cstring>
 #include <stdexcept>
 #include <algorithm>
+#include <iostream>
+
+template <typename T> class MyVector;
+template <typename T> std::ostream& operator<<(std::ostream& os, const MyVector<T>& vec);
 
 template <typename T>
 class MyVector {
@@ -16,17 +20,22 @@ protected:
 public:
     explicit MyVector(size_t initial_max_size = 1);
     MyVector(const MyVector& other);
+    explicit MyVector(const T& element);
     ~MyVector();
 
     virtual void add_element(const T& element);
     virtual void delete_element(const T& element);
     int find(const T& element) const;
+    size_t get_max_size() const { return max_size; }
+    size_t get_size() const { return size; }
 
     void sort();
 
     T& operator[](size_t index);
     const T& operator[](size_t index) const;
     MyVector& operator=(const MyVector& other);
+
+    friend std::ostream& operator<< <T>(std::ostream& os, const MyVector<T>& vec);
 };
 
 template <>
@@ -43,7 +52,11 @@ protected:
 public:
     explicit MyVector(size_t initial_max_size = 1);
     MyVector(const MyVector& other);
+    explicit MyVector(const char* element);
     ~MyVector();
+
+    size_t get_max_size() const { return max_size; }
+    size_t get_size() const { return size; }
 
     virtual void add_element(const char* element);
     virtual void delete_element(const char* element);
@@ -54,12 +67,10 @@ public:
     char*& operator[](size_t index);
     const char* operator[](size_t index) const;
     MyVector& operator=(const MyVector& other);
+
+    friend std::ostream& operator<<(std::ostream& os, const MyVector<char*>& vec);
 };
 
-#include "MyVector.h"
-#include <cstring>
-#include <algorithm>
-#include <stdexcept>
 
 template <typename T>
 MyVector<T>::MyVector(size_t initial_max_size)
@@ -82,6 +93,12 @@ MyVector<T>::MyVector(const MyVector& other)
     for(size_t i = 0; i < size; ++i) {
         pdata[i] = other.pdata[i];
     }
+}
+
+template <typename T>
+MyVector<T>::MyVector(const T& element)
+    : max_size(1), size(1), pdata(new T[1]) {
+    pdata[0] = element;
 }
 
 template <typename T>
@@ -159,6 +176,18 @@ MyVector<T>& MyVector<T>::operator=(const MyVector& other) {
     return *this;
 }
 
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const MyVector<T>& vec) {
+    os << "[";
+    for(size_t i = 0; i < vec.size; ++i) {
+        if(i != 0) os << ", ";
+        os << vec.pdata[i];
+    }
+    os << "]";
+    return os;
+}
+
+
 MyVector<char*>::MyVector(size_t initial_max_size)
     : max_size(initial_max_size), size(0), pdata(new char*[max_size]()) {}
 
@@ -179,6 +208,16 @@ MyVector<char*>::MyVector(const MyVector& other)
             pdata[i] = new char[strlen(other.pdata[i]) + 1];
             strcpy(pdata[i], other.pdata[i]);
         }
+    }
+}
+
+MyVector<char*>::MyVector(const char* element)
+    : max_size(1), size(1), pdata(new char*[1]) {
+    if(element) {
+        pdata[0] = new char[strlen(element) + 1];
+        strcpy(pdata[0], element);
+    } else {
+        pdata[0] = nullptr;
     }
 }
 
@@ -292,5 +331,18 @@ MyVector<char*>& MyVector<char*>::operator=(const MyVector& other) {
     return *this;
 }
 
+std::ostream& operator<<(std::ostream& os, const MyVector<char*>& vec) {
+    os << "[";
+    for(size_t i = 0; i < vec.size; ++i) {
+        if(i != 0) os << ", ";
+        if(vec.pdata[i]) {
+            os << "\"" << vec.pdata[i] << "\"";
+        } else {
+            os << "null";
+        }
+    }
+    os << "]";
+    return os;
+}
 
 #endif // MYVECTOR_H
