@@ -5,47 +5,45 @@
 void demonstrateTermAndPolynomial() {
     std::cout << "=== Combined Demonstration ===\n";
 
-    // Демонстрация термов
     std::cout << "\n--- Term Examples ---\n";
-    Term t1(3, 2);      // 3x^2
-    Term t2(-1, 1);     // -x
-    Term t3(5, 0);      // 5
-    Term t4(0, 3);      // 0
+    Term t1(3, 2);
+    Term t2(-1, 1);
+    Term t3(5, 0);
+    Term t4(0, 3);
 
     std::cout << "t1: " << t1 << "\n";
     std::cout << "t2: " << t2 << "\n";
     std::cout << "t3: " << t3 << "\n";
     std::cout << "t4: " << t4 << "\n";
 
-    Term sum = t1 + Term(-2, 2);  // 3x^2 - 2x^2 = x^2
+    Term sum = t1 + Term(-2, 2);
     std::cout << "3x^2 + (-2x^2) = " << sum << "\n";
 
-    Term product = t1 * t2;       // 3x^2 * -x = -3x^3
+    Term product = t1 * t2;
     std::cout << "3x^2 * (-x) = " << product << "\n";
 
-    // Демонстрация полиномов
     std::cout << "\n--- Polynomial Examples ---\n";
-    Polynomial p1(t1);            // 3x^2
+    Polynomial p1(t1);
     Polynomial p2;
-    p2 += t2;                     // -x
-    p2 += t3;                     // -x + 5
+    p2 += t2;
+    p2 += t3;
 
     std::cout << "p1: " << p1 << "\n";
     std::cout << "p2: " << p2 << "\n";
 
-    Polynomial p3 = p1 + p2;      // 3x^2 - x + 5
+    Polynomial p3 = p1 + p2;
     std::cout << "p1 + p2 = " << p3 << "\n";
 
-    Polynomial p4 = p1 * p2;      // 3x^2 * (-x + 5) = -3x^3 + 15x^2
+    Polynomial p4 = p1 * p2;
     std::cout << "p1 * p2 = " << p4 << "\n";
 
     Polynomial p5;
-    p5 += Term(2, 3);             // 2x^3
-    p5 += Term(-1, 1);            // 2x^3 - x
-    p5 += Term(4, 0);             // 2x^3 - x + 4
+    p5 += Term(2, 3);
+    p5 += Term(-1, 1);
+    p5 += Term(4, 0);
     std::cout << "p5: " << p5 << "\n";
 
-    Polynomial p6 = p5 * Term(-1, 2);  // (2x^3 - x + 4) * -x^2 = -2x^5 + x^3 - 4x^2
+    Polynomial p6 = p5 * Term(-1, 2);
     std::cout << "p5 * (-x^2) = " << p6 << "\n\n";
 }
 
@@ -67,7 +65,6 @@ void combinedInteractiveMode() {
         if (choice == 0) break;
 
         if (choice == 1) {
-            // Работа с отдельными термами
             Term t1, t2;
             std::cout << "Enter first term (e.g. 3x^2, -5, x): ";
             std::cin >> t1;
@@ -84,7 +81,6 @@ void combinedInteractiveMode() {
             std::cout << t1 << " * " << t2 << " = " << (t1 * t2) << "\n";
         }
         else if (choice == 2) {
-            // Работа с полиномами
             Polynomial p1, p2;
             std::cout << "Enter first polynomial (e.g. 3x^2 - x + 5): ";
             std::cin >> p1;
@@ -96,7 +92,6 @@ void combinedInteractiveMode() {
             std::cout << "Product: " << (p1 * p2) << "\n";
         }
         else if (choice == 3) {
-            // Создание полинома из нескольких термов
             Polynomial p;
             std::cout << "Building a polynomial. Enter terms one by one (enter '0' to finish):\n";
 
@@ -113,7 +108,6 @@ void combinedInteractiveMode() {
 
             std::cout << "Final polynomial: " << p << "\n";
 
-            // Дополнительные операции с созданным полиномом
             std::cout << "\nAdditional operations:\n";
             std::cout << "1. Multiply by a term\n";
             std::cout << "2. Add another polynomial\n";
