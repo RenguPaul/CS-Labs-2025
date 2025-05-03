@@ -1,0 +1,2 @@
+/usr/bin/ar qc libFinalExam.a CMakeFiles/FinalExam.dir/FinalExam.cpp.o
+/usr/bin/ranlib libFinalExam.a

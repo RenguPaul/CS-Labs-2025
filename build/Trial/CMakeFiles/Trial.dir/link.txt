@@ -1,0 +1,2 @@
+/usr/bin/ar qc libTrial.a CMakeFiles/Trial.dir/Trial.cpp.o
+/usr/bin/ranlib libTrial.a
