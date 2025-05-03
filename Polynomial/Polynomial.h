@@ -2,36 +2,38 @@
 #define POLYNOMIAL_H
 
 #include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/Term/Term.h"
-#include "MyVector.h"
+#include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MyVector/MyVector.h"
 
 class Polynomial {
 private:
     MyVector<Term> terms;
     int degree;
-    bool order;
+    bool order_asc;
 
     void combineLikeTerms();
     void sortTerms();
+    void updateDegree();
 
 public:
     Polynomial();
-    explicit Polynomial(int constant);
-    explicit Polynomial(const Term& term);
+    Polynomial(int constant);
+    Polynomial(const Term& term);
     Polynomial(const Polynomial& other);
 
     Polynomial& operator=(const Polynomial& other);
-    Polynomial& operator+=(const Polynomial& other);
-    Polynomial& operator*=(const Polynomial& other);
     Polynomial& operator+=(const Term& term);
+    Polynomial& operator+=(const Polynomial& other);
     Polynomial& operator*=(const Term& term);
+    Polynomial& operator*=(const Polynomial& other);
 
-    friend Polynomial operator+(const Polynomial& lhs, const Polynomial& rhs);
-    friend Polynomial operator*(const Polynomial& lhs, const Polynomial& rhs);
-    friend Polynomial operator+(const Polynomial& p, const Term& t);
-    friend Polynomial operator*(const Polynomial& p, const Term& t);
+    int getDegree() const;
+    bool isOrderAsc() const;
+    void setOrderAsc(bool asc);
 
-    friend std::istream& operator>>(std::istream& is, Polynomial& poly);
+    friend Polynomial operator+(const Polynomial& p1, const Polynomial& p2);
+    friend Polynomial operator*(const Polynomial& p1, const Polynomial& p2);
     friend std::ostream& operator<<(std::ostream& os, const Polynomial& poly);
+    friend std::istream& operator>>(std::istream& is, Polynomial& poly);
 };
 
 #endif // POLYNOMIAL_H

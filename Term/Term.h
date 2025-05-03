@@ -2,6 +2,7 @@
 #define TERM_H
 
 #include <iostream>
+#include <stdexcept>
 
 class Term {
 private:
@@ -9,22 +10,23 @@ private:
     int exponent;
 
 public:
-    Term(int coeff = 0, int exp = 0) : coefficient(coeff), exponent(exp){}
+    Term();
+    Term(int coeff);
+    Term(int coeff, int exp);
 
-    ~Term() = default;
-
-    int getCoefficient() const {
-        return coefficient;
-    }
-    int getExponent() const {
-        return exponent;
-    }
+    int getCoefficient() const;
+    int getExponent() const;
+    void setCoefficient(int coeff);
+    void setExponent(int exp);
 
     Term operator+(const Term& other) const;
-    Term operator-(const Term& other) const;
+    Term operator*(const Term& other) const;
+    bool operator==(const Term& other) const;
+    bool operator!=(const Term& other) const;
+    bool operator<(const Term& other) const;
 
-    friend std::istream& operator>>(std::istream& is, Term& term);
     friend std::ostream& operator<<(std::ostream& os, const Term& term);
+    friend std::istream& operator>>(std::istream& is, Term& term);
 
     friend class Polynomial;
 };

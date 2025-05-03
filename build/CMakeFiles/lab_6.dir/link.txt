@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/lab_6.dir/main.cpp.o -o lab_6  MyVector/libMyVector.a Term/libTerm.a Polynomial/libPolynomial.a 
