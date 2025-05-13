@@ -54,7 +54,6 @@ void combinedInteractiveMode() {
         std::cout << "\nOptions:\n";
         std::cout << "1. Work with single Terms\n";
         std::cout << "2. Work with Polynomials\n";
-        std::cout << "3. Create Polynomial from multiple Terms\n";
         std::cout << "0. Exit\n";
         std::cout << "Your choice: ";
 
@@ -79,6 +78,7 @@ void combinedInteractiveMode() {
                 std::cout << "Error: " << e.what() << "\n";
             }
             std::cout << t1 << " * " << t2 << " = " << (t1 * t2) << "\n";
+            std::cout << t1 << " - " << t2 << " = " << (t1 - t2) << "\n";
         }
         else if (choice == 2) {
             Polynomial p1, p2;
@@ -87,49 +87,12 @@ void combinedInteractiveMode() {
             std::cout << "Enter second polynomial: ";
             std::cin >> p2;
 
+            std::cout << p1 << std::endl;
+            std::cout << p2 << std::endl;
             std::cout << "\nResults:\n";
             std::cout << "Sum: " << (p1 + p2) << "\n";
             std::cout << "Product: " << (p1 * p2) << "\n";
-        }
-        else if (choice == 3) {
-            Polynomial p;
-            std::cout << "Building a polynomial. Enter terms one by one (enter '0' to finish):\n";
-
-            while (true) {
-                Term t;
-                std::cout << "Enter term (or '0' to finish): ";
-                std::cin >> t;
-
-                if (t.getCoefficient() == 0 && t.getExponent() == 0) break;
-
-                p += t;
-                std::cout << "Current polynomial: " << p << "\n";
-            }
-
-            std::cout << "Final polynomial: " << p << "\n";
-
-            std::cout << "\nAdditional operations:\n";
-            std::cout << "1. Multiply by a term\n";
-            std::cout << "2. Add another polynomial\n";
-            std::cout << "0. Continue\n";
-            std::cout << "Your choice: ";
-            std::cin >> choice;
-            std::cin.ignore();
-
-            if (choice == 1) {
-                Term t;
-                std::cout << "Enter term to multiply by: ";
-                std::cin >> t;
-                p *= t;
-                std::cout << "Result: " << p << "\n";
-            }
-            else if (choice == 2) {
-                Polynomial p2;
-                std::cout << "Enter polynomial to add: ";
-                std::cin >> p2;
-                p += p2;
-                std::cout << "Result: " << p << "\n";
-            }
+            std::cout << "Difference: " << (p1 - p2) << "\n";
         }
     }
 }

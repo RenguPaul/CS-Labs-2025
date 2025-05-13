@@ -20,6 +20,12 @@ public:
     void setExponent(int exp);
 
     Term operator+(const Term& other) const;
+    Term operator-(const Term& other) const;
+    Term& operator+=(Term& other);
+    Term& operator-=(Term& other);
+
+
+
     Term operator*(const Term& other) const;
     bool operator==(const Term& other) const;
     bool operator!=(const Term& other) const;

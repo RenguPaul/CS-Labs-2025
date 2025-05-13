@@ -20,6 +20,13 @@ Term Term::operator+(const Term& other) const {
     return Term(coefficient + other.coefficient, exponent);
 }
 
+Term Term::operator-(const Term& other) const {
+    if (exponent != other.exponent) {
+        throw std::invalid_argument("Cannot add terms with different exponents");
+    }
+    return Term(coefficient - other.coefficient, exponent);
+}
+
 Term Term::operator*(const Term& other) const {
     return Term(coefficient * other.coefficient, exponent + other.exponent);
 }
@@ -62,45 +69,60 @@ std::ostream& operator<<(std::ostream& os, const Term& term) {
 }
 
 std::istream& operator>>(std::istream& is, Term& term) {
-    char buffer[256];
-    is >> buffer;
-
     term.coefficient = 1;
     term.exponent = 0;
 
-    char* ptr = buffer;
-    bool negative = false;
+    while (is.peek() == ' ') is.get();
 
-    if (*ptr == '-') {
+    bool negative = false;
+    if (is.peek() == '-') {
         negative = true;
-        ptr++;
-    } else if (*ptr == '+') {
-        ptr++;
+        is.get();
+    } else if (is.peek() == '+') {
+        is.get();
     }
 
-    if (*ptr == 'x') {
+    while (is.peek() == ' ') is.get();
+
+    if (is.peek() == 'x') {
         term.coefficient = negative ? -1 : 1;
     } else {
-        char* end;
-        term.coefficient = strtol(ptr, &end, 10);
+        is >> term.coefficient;
         if (negative) term.coefficient *= -1;
-        ptr = end;
+
+        while (is.peek() == ' ') is.get();
     }
 
-    if (*ptr == 'x') {
-        ptr++;
-        if (*ptr == '^') {
-            ptr++;
-            if (*ptr == '(' && *(ptr+1) == '-' && *(ptr+3) == ')') {
-                term.exponent = -1 * (*(ptr+2) - '0');
-                ptr += 4;
-            } else {
-                term.exponent = strtol(ptr, nullptr, 10);
-            }
-        } else {
-            term.exponent = 1;
+    if (is.peek() == 'x') {
+        is.get();
+        term.exponent = 1;
+
+        while (is.peek() == ' ') is.get();
+
+        if (is.peek() == '^') {
+            is.get();
+
+            while (is.peek() == ' ') is.get();
+
+            is >> term.exponent;
         }
     }
 
     return is;
+}
+
+Term& Term::operator+=(Term& other) {
+    if (exponent != other.exponent) {
+        throw std::invalid_argument("Cannot add terms with different exponents");
+    }
+    (*this).coefficient += other.getCoefficient();
+    return *this;
+}
+
+Term& Term::operator-=(Term& other) {
+    if (exponent != other.exponent) {
+        throw std::invalid_argument("Cannot add terms with different exponents");
+    }
+    (*this).coefficient -= other.getCoefficient();
+    return *this;
 }

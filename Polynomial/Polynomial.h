@@ -23,6 +23,8 @@ public:
     Polynomial& operator=(const Polynomial& other);
     Polynomial& operator+=(const Term& term);
     Polynomial& operator+=(const Polynomial& other);
+    Polynomial& operator-=(const Term& term);
+    Polynomial& operator-=(const Polynomial& other);
     Polynomial& operator*=(const Term& term);
     Polynomial& operator*=(const Polynomial& other);
 
@@ -31,6 +33,7 @@ public:
     void setOrderAsc(bool asc);
 
     friend Polynomial operator+(const Polynomial& p1, const Polynomial& p2);
+    friend Polynomial operator-(const Polynomial& p1, const Polynomial& p2);
     friend Polynomial operator*(const Polynomial& p1, const Polynomial& p2);
     friend std::ostream& operator<<(std::ostream& os, const Polynomial& poly);
     friend std::istream& operator>>(std::istream& is, Polynomial& poly);

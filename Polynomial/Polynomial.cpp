@@ -104,6 +104,33 @@ Polynomial& Polynomial::operator+=(const Term& term) {
     return *this;
 }
 
+Polynomial& Polynomial::operator-=(const Term& term) {
+    if (term.coefficient == 0) return *this;
+
+    for (size_t i = 0; i < terms.get_size(); ++i) {
+        if (terms[i].exponent == term.exponent) {
+            terms[i].coefficient -= term.coefficient;
+            if (terms[i].coefficient == 0) {
+                terms.delete_element(terms[i]);
+            }
+            updateDegree();
+            return *this;
+        }
+    }
+
+    terms.add_element(term);
+    sortTerms();
+    updateDegree();
+    return *this;
+}
+
+Polynomial& Polynomial::operator-=(const Polynomial& other) {
+    for (size_t i = 0; i < other.terms.get_size(); ++i) {
+        *this -= other.terms[i];
+    }
+    return *this;
+}
+
 Polynomial& Polynomial::operator+=(const Polynomial& other) {
     for (size_t i = 0; i < other.terms.get_size(); ++i) {
         *this += other.terms[i];
@@ -163,6 +190,12 @@ Polynomial operator+(const Polynomial& p1, const Polynomial& p2) {
     return result;
 }
 
+Polynomial operator-(const Polynomial& p1, const Polynomial& p2) {
+    Polynomial result(p1);
+    result -= p2;
+    return result;
+}
+
 Polynomial operator*(const Polynomial& p1, const Polynomial& p2) {
     Polynomial result;
     for (size_t i = 0; i < p1.terms.get_size(); ++i) {
@@ -192,12 +225,13 @@ std::istream& operator>>(std::istream& is, Polynomial& poly) {
         if (*current == '+') {
             sign = 1;
             current++;
+            while (*current == ' ' || *current == '\t') current++;
         } else if (*current == '-') {
             sign = -1;
             current++;
+            while (*current == ' ' || *current == '\t') current++;
         }
 
-        while (*current == ' ' || *current == '\t') current++;
         if (*current == '\0') break;
 
         char* term_start = current;
@@ -212,31 +246,43 @@ std::istream& operator>>(std::istream& is, Polynomial& poly) {
         char* ptr = term_buf;
 
         int coeff = 1;
+        bool has_x = false;
         if (*ptr != 'x') {
             coeff = strtol(ptr, &ptr, 10);
             if (ptr == term_buf) coeff = 1;
+            while (*ptr == ' ' || *ptr == '\t') ptr++;
         }
         term.setCoefficient(coeff * sign);
 
         int exp = 0;
         if (*ptr == 'x') {
+            has_x = true;
             ptr++;
             exp = 1;
 
+            while (*ptr == ' ' || *ptr == '\t') ptr++;
+
             if (*ptr == '^') {
                 ptr++;
-                if (*ptr == '(' && *(ptr+1) == '-') {
+                while (*ptr == ' ' || *ptr == '\t') ptr++;
+
+                if (*ptr == '-') {
+                    ptr++;
+                    exp = -strtol(ptr, &ptr, 10);
+                } else if (*ptr == '(' && *(ptr+1) == '-') {
                     ptr += 2;
                     exp = -strtol(ptr, &ptr, 10);
                     if (*ptr == ')') ptr++;
-                } else if (*ptr == '-') {
-                    ptr++;
-                    exp = -strtol(ptr, &ptr, 10);
                 } else {
                     exp = strtol(ptr, &ptr, 10);
                 }
             }
         }
+
+        if (!has_x && coeff != 0) {
+            exp = 0;
+        }
+
         term.setExponent(exp);
 
         if (term.getCoefficient() != 0) {
