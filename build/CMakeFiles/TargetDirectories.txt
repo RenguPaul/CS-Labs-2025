@@ -4,6 +4,9 @@
 /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/MyVector/CMakeFiles/MyVector.dir
 /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/MyVector/CMakeFiles/edit_cache.dir
 /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/MyVector/CMakeFiles/rebuild_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/MySet/CMakeFiles/MySet.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/MySet/CMakeFiles/edit_cache.dir
+/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/MySet/CMakeFiles/rebuild_cache.dir
 /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/Test/CMakeFiles/Test.dir
 /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/Test/CMakeFiles/edit_cache.dir
 /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/Test/CMakeFiles/rebuild_cache.dir

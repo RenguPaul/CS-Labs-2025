@@ -143,6 +143,19 @@ MyVector/fast:
 .PHONY : MyVector/fast
 
 #=============================================================================
+# Target rules for targets named MySet
+
+# Build rule for target.
+MySet: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MySet
+.PHONY : MySet
+
+# fast build rule for target.
+MySet/fast:
+	$(MAKE) $(MAKESILENT) -f MySet/CMakeFiles/MySet.dir/build.make MySet/CMakeFiles/MySet.dir/build
+.PHONY : MySet/fast
+
+#=============================================================================
 # Target rules for targets named Test
 
 # Build rule for target.
@@ -228,6 +241,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Exam"
 	@echo "... FinalExam"
+	@echo "... MySet"
 	@echo "... MyVector"
 	@echo "... Test"
 	@echo "... Trial"

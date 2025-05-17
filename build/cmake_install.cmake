@@ -49,6 +49,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/MySet/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/Test/cmake_install.cmake")
 endif()
 

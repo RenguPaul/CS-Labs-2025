@@ -2,7 +2,7 @@
 #include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/Exam/Exam.h"
 #include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/FinalExam/FinalExam.h"
 #include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/Trial/Trial.h"
-#include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MyVector/MyVector.h"
+#include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MySet/MySet.h"
 #include <iostream>
 #include <limits>
 
@@ -14,36 +14,38 @@ void safeInput(char* buffer, int size) {
     }
 }
 
-void print(const MyVector<Test*>& container) {
-    for (size_t i = 0; i < container.get_size(); ++i) {
+void print(const MySet<Test*>& container) {
+    for (size_t i = 0; i < container.size; ++i) {
         std::cout << "[" << i << "] ";
-        container[i]->show();
+        container.pdata[i]->show();
         std::cout << std::endl;
     }
 }
 
-void remove(MyVector<Test*>& container, size_t index) {
-    if (index >= container.get_size()) {
+void remove(MySet<Test*>& container, size_t index) {
+    if (index >= container.size) {
         std::cout << "Error: Index out of range\n";
         return;
     }
-    delete container[index];
-    container.delete_element(container[index]);
+
+    delete container.pdata[index];
+    container.delete_element(container.pdata[index]);
 }
 
-void clear(MyVector<Test*>& container) {
-    for (size_t i = 0; i < container.get_size(); ++i) {
-        delete container[i];
+void clear(MySet<Test*>& container) {
+    for (size_t i = 0; i < container.size; ++i) {
+        delete container.pdata[i];
     }
-    while (container.get_size() > 0) {
-        container.delete_element(container[0]);
+    container.size = 0;
+    if (container.max_size > 1) {
+        container.resize(1);
     }
 }
 
 void demonstrationMode() {
     std::cout << "\n=== DEMONSTRATION MODE ===\n";
 
-    MyVector<Test*> tests;
+    MySet<Test*> tests;
 
     tests.add_element(new Exam("Midterm Math", 20, "Mathematics", 90));
     tests.add_element(new FinalExam("Calculus Final", 30, "Mathematics", 180, true));
@@ -61,11 +63,11 @@ void demonstrationMode() {
     std::cout << "\nClearing all tests...\n";
     clear(tests);
 
-    std::cout << "\nContainer size after clear: " << tests.get_size() << std::endl;
+    std::cout << "\nContainer size after clear: " << tests.size << std::endl;
 }
 
 void interactiveMode() {
-    MyVector<Test*> tests;
+    MySet<Test*> tests;
     int choice;
     const int BUFFER_SIZE = 100;
     char buffer[BUFFER_SIZE];

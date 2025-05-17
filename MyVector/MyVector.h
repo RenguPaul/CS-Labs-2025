@@ -11,13 +11,12 @@ template <typename T> std::ostream& operator<<(std::ostream& os, const MyVector<
 
 template <typename T>
 class MyVector {
-protected:
+public:
     size_t max_size;
     size_t size;
     T* pdata;
 
     void resize(size_t new_size);
-public:
     explicit MyVector(size_t initial_max_size = 1);
     MyVector(const MyVector& other);
     explicit MyVector(const T& element);
@@ -40,7 +39,7 @@ public:
 
 template <>
 class MyVector<char*> {
-protected:
+public:
     size_t max_size;
     size_t size;
     char** pdata;
@@ -49,7 +48,6 @@ protected:
     static int partition(char** array, int left, int right);
     static void quickSort(char** array, int left, int right);
 
-public:
     explicit MyVector(size_t initial_max_size = 1);
     MyVector(const MyVector& other);
     explicit MyVector(const char* element);
@@ -187,5 +185,162 @@ std::ostream& operator<<(std::ostream& os, const MyVector<T>& vec) {
     return os;
 }
 
+
+MyVector<char*>::MyVector(size_t initial_max_size)
+    : max_size(initial_max_size), size(0), pdata(new char*[max_size]()) {}
+
+void MyVector<char*>::resize(size_t new_size) {
+    char** new_pdata = new char*[new_size]();
+    for(size_t i = 0; i < size; ++i) {
+        new_pdata[i] = pdata[i];
+    }
+    delete[] pdata;
+    pdata = new_pdata;
+    max_size = new_size;
+}
+
+MyVector<char*>::MyVector(const MyVector& other)
+    : max_size(other.max_size), size(other.size), pdata(new char*[max_size]()) {
+    for(size_t i = 0; i < size; ++i) {
+        if(other.pdata[i]) {
+            pdata[i] = new char[strlen(other.pdata[i]) + 1];
+            strcpy(pdata[i], other.pdata[i]);
+        }
+    }
+}
+
+MyVector<char*>::MyVector(const char* element)
+    : max_size(1), size(1), pdata(new char*[1]) {
+    if(element) {
+        pdata[0] = new char[strlen(element) + 1];
+        strcpy(pdata[0], element);
+    } else {
+        pdata[0] = nullptr;
+    }
+}
+
+MyVector<char*>::~MyVector() {
+    for(size_t i = 0; i < size; ++i) {
+        delete[] pdata[i];
+    }
+    delete[] pdata;
+}
+
+void MyVector<char*>::add_element(const char* element) {
+    if(size == max_size) {
+        resize(max_size ? max_size * 2 : 1);
+    }
+    pdata[size] = new char[strlen(element) + 1];
+    strcpy(pdata[size], element);
+    ++size;
+}
+
+void MyVector<char*>::delete_element(const char* element) {
+    int index = find(element);
+    if(index == -1) return;
+
+    delete[] pdata[index];
+    for(size_t i = index; i < size - 1; ++i) {
+        pdata[i] = pdata[i + 1];
+    }
+    --size;
+
+    if(size < max_size / 4 && max_size > 1) {
+        resize(max_size / 2);
+    }
+}
+
+int MyVector<char*>::find(const char* element) const {
+    if(element == nullptr) {
+        for(size_t i = 0; i < size; ++i) {
+            if(pdata[i] == nullptr) {
+                return static_cast<int>(i);
+            }
+        }
+    } else {
+        for(size_t i = 0; i < size; ++i) {
+            if(pdata[i] && strcmp(element, pdata[i]) == 0) {
+                return static_cast<int>(i);
+            }
+        }
+    }
+    return -1;
+}
+
+int MyVector<char*>::partition(char** array, int left, int right) {
+    const char* pivot = array[(left + right) / 2];
+    int i = left;
+    int j = right;
+
+    while(i <= j) {
+        while(strcmp(array[i], pivot) < 0) ++i;
+        while(strcmp(array[j], pivot) > 0) --j;
+        if(i <= j) std::swap(array[i++], array[j--]);
+    }
+    return j;
+}
+
+void MyVector<char*>::quickSort(char** array, int left, int right) {
+    if(left < right) {
+        int q = partition(array, left, right);
+        quickSort(array, left, q);
+        quickSort(array, q + 1, right);
+    }
+}
+
+void MyVector<char*>::sort() {
+    if(size > 1) {
+        quickSort(pdata, 0, static_cast<int>(size) - 1);
+    }
+}
+
+char*& MyVector<char*>::operator[](size_t index) {
+    if(index >= size) {
+        throw std::out_of_range("Index out of range");
+    }
+    return pdata[index];
+}
+
+const char* MyVector<char*>::operator[](size_t index) const {
+    if(index >= size) {
+        throw std::out_of_range("Index out of range");
+    }
+    return pdata[index];
+}
+
+MyVector<char*>& MyVector<char*>::operator=(const MyVector& other) {
+    if(this != &other) {
+        for(size_t i = 0; i < size; ++i) {
+            delete[] pdata[i];
+        }
+        delete[] pdata;
+
+        max_size = other.max_size;
+        size = other.size;
+        pdata = new char*[max_size]();
+
+        for(size_t i = 0; i < size; ++i) {
+            if(other.pdata[i]) {
+                pdata[i] = new char[strlen(other.pdata[i]) + 1];
+                strcpy(pdata[i], other.pdata[i]);
+            }
+        }
+    }
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& os, const MyVector<char*>& vec) {
+    os << "[";
+    for(size_t i = 0; i < vec.size; ++i) {
+        if(i != 0) os << ", ";
+        if(vec.pdata[i]) {
+            os << "\"" << vec.pdata[i] << "\"";
+        } else {
+            os << "null";
+        }
+    }
+    os << "]";
+    return os;
+}
 
 #endif // MYVECTOR_H

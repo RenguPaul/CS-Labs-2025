@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(${project} main.cpp)
 
 add_subdirectory(MyVector)
+add_subdirectory(MySet)
 add_subdirectory(Test)
 add_subdirectory(Exam)
 add_subdirectory(FinalExam)
@@ -16,6 +17,7 @@ add_subdirectory(Trial)
 
 target_link_libraries(${project}
     MyVector
+    MySet
     Trial
     FinalExam
     Exam

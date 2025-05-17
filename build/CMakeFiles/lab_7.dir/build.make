@@ -93,6 +93,7 @@ lab_7_EXTERNAL_OBJECTS =
 lab_7: CMakeFiles/lab_7.dir/main.cpp.o
 lab_7: CMakeFiles/lab_7.dir/build.make
 lab_7: MyVector/libMyVector.a
+lab_7: MySet/libMySet.a
 lab_7: Trial/libTrial.a
 lab_7: FinalExam/libFinalExam.a
 lab_7: Exam/libExam.a

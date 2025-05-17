@@ -10,6 +10,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/CMakeLists.txt"
   "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/Exam/CMakeLists.txt"
   "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/FinalExam/CMakeLists.txt"
+  "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MySet/CMakeLists.txt"
   "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MyVector/CMakeLists.txt"
   "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/Test/CMakeLists.txt"
   "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/Trial/CMakeLists.txt"
@@ -46,6 +47,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "MyVector/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "MySet/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Test/CMakeFiles/CMakeDirectoryInformation.cmake"
   "Exam/CMakeFiles/CMakeDirectoryInformation.cmake"
   "FinalExam/CMakeFiles/CMakeDirectoryInformation.cmake"
@@ -56,6 +58,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/lab_7.dir/DependInfo.cmake"
   "MyVector/CMakeFiles/MyVector.dir/DependInfo.cmake"
+  "MySet/CMakeFiles/MySet.dir/DependInfo.cmake"
   "Test/CMakeFiles/Test.dir/DependInfo.cmake"
   "Exam/CMakeFiles/Exam.dir/DependInfo.cmake"
   "FinalExam/CMakeFiles/FinalExam.dir/DependInfo.cmake"

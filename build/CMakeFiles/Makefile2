@@ -65,6 +65,7 @@ CMAKE_BINARY_DIR = /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build
 # The main recursive "all" target.
 all: CMakeFiles/lab_7.dir/all
 all: MyVector/all
+all: MySet/all
 all: Test/all
 all: Exam/all
 all: FinalExam/all
@@ -73,6 +74,7 @@ all: Trial/all
 
 # The main recursive "preinstall" target.
 preinstall: MyVector/preinstall
+preinstall: MySet/preinstall
 preinstall: Test/preinstall
 preinstall: Exam/preinstall
 preinstall: FinalExam/preinstall
@@ -82,6 +84,7 @@ preinstall: Trial/preinstall
 # The main recursive "clean" target.
 clean: CMakeFiles/lab_7.dir/clean
 clean: MyVector/clean
+clean: MySet/clean
 clean: Test/clean
 clean: Exam/clean
 clean: FinalExam/clean
@@ -117,6 +120,21 @@ FinalExam/preinstall:
 # Recursive "clean" directory target.
 FinalExam/clean: FinalExam/CMakeFiles/FinalExam.dir/clean
 .PHONY : FinalExam/clean
+
+#=============================================================================
+# Directory level rules for directory MySet
+
+# Recursive "all" directory target.
+MySet/all: MySet/CMakeFiles/MySet.dir/all
+.PHONY : MySet/all
+
+# Recursive "preinstall" directory target.
+MySet/preinstall:
+.PHONY : MySet/preinstall
+
+# Recursive "clean" directory target.
+MySet/clean: MySet/CMakeFiles/MySet.dir/clean
+.PHONY : MySet/clean
 
 #=============================================================================
 # Directory level rules for directory MyVector
@@ -168,18 +186,19 @@ Trial/clean: Trial/CMakeFiles/Trial.dir/clean
 
 # All Build rule for target.
 CMakeFiles/lab_7.dir/all: MyVector/CMakeFiles/MyVector.dir/all
+CMakeFiles/lab_7.dir/all: MySet/CMakeFiles/MySet.dir/all
 CMakeFiles/lab_7.dir/all: Test/CMakeFiles/Test.dir/all
 CMakeFiles/lab_7.dir/all: Exam/CMakeFiles/Exam.dir/all
 CMakeFiles/lab_7.dir/all: FinalExam/CMakeFiles/FinalExam.dir/all
 CMakeFiles/lab_7.dir/all: Trial/CMakeFiles/Trial.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lab_7.dir/build.make CMakeFiles/lab_7.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lab_7.dir/build.make CMakeFiles/lab_7.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles --progress-num=11,12 "Built target lab_7"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles --progress-num=13,14 "Built target lab_7"
 .PHONY : CMakeFiles/lab_7.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/lab_7.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles 12
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles 14
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/lab_7.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles 0
 .PHONY : CMakeFiles/lab_7.dir/rule
@@ -200,7 +219,7 @@ CMakeFiles/lab_7.dir/clean:
 MyVector/CMakeFiles/MyVector.dir/all:
 	$(MAKE) $(MAKESILENT) -f MyVector/CMakeFiles/MyVector.dir/build.make MyVector/CMakeFiles/MyVector.dir/depend
 	$(MAKE) $(MAKESILENT) -f MyVector/CMakeFiles/MyVector.dir/build.make MyVector/CMakeFiles/MyVector.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles --progress-num=5,6 "Built target MyVector"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles --progress-num=7,8 "Built target MyVector"
 .PHONY : MyVector/CMakeFiles/MyVector.dir/all
 
 # Build rule for subdir invocation for target.
@@ -220,13 +239,39 @@ MyVector/CMakeFiles/MyVector.dir/clean:
 .PHONY : MyVector/CMakeFiles/MyVector.dir/clean
 
 #=============================================================================
+# Target rules for target MySet/CMakeFiles/MySet.dir
+
+# All Build rule for target.
+MySet/CMakeFiles/MySet.dir/all:
+	$(MAKE) $(MAKESILENT) -f MySet/CMakeFiles/MySet.dir/build.make MySet/CMakeFiles/MySet.dir/depend
+	$(MAKE) $(MAKESILENT) -f MySet/CMakeFiles/MySet.dir/build.make MySet/CMakeFiles/MySet.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles --progress-num=5,6 "Built target MySet"
+.PHONY : MySet/CMakeFiles/MySet.dir/all
+
+# Build rule for subdir invocation for target.
+MySet/CMakeFiles/MySet.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MySet/CMakeFiles/MySet.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles 0
+.PHONY : MySet/CMakeFiles/MySet.dir/rule
+
+# Convenience name for target.
+MySet: MySet/CMakeFiles/MySet.dir/rule
+.PHONY : MySet
+
+# clean rule for target.
+MySet/CMakeFiles/MySet.dir/clean:
+	$(MAKE) $(MAKESILENT) -f MySet/CMakeFiles/MySet.dir/build.make MySet/CMakeFiles/MySet.dir/clean
+.PHONY : MySet/CMakeFiles/MySet.dir/clean
+
+#=============================================================================
 # Target rules for target Test/CMakeFiles/Test.dir
 
 # All Build rule for target.
 Test/CMakeFiles/Test.dir/all:
 	$(MAKE) $(MAKESILENT) -f Test/CMakeFiles/Test.dir/build.make Test/CMakeFiles/Test.dir/depend
 	$(MAKE) $(MAKESILENT) -f Test/CMakeFiles/Test.dir/build.make Test/CMakeFiles/Test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles --progress-num=7,8 "Built target Test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles --progress-num=9,10 "Built target Test"
 .PHONY : Test/CMakeFiles/Test.dir/all
 
 # Build rule for subdir invocation for target.
@@ -305,7 +350,7 @@ FinalExam/CMakeFiles/FinalExam.dir/clean:
 Trial/CMakeFiles/Trial.dir/all: Test/CMakeFiles/Test.dir/all
 	$(MAKE) $(MAKESILENT) -f Trial/CMakeFiles/Trial.dir/build.make Trial/CMakeFiles/Trial.dir/depend
 	$(MAKE) $(MAKESILENT) -f Trial/CMakeFiles/Trial.dir/build.make Trial/CMakeFiles/Trial.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles --progress-num=9,10 "Built target Trial"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/build/CMakeFiles --progress-num=11,12 "Built target Trial"
 .PHONY : Trial/CMakeFiles/Trial.dir/all
 
 # Build rule for subdir invocation for target.
