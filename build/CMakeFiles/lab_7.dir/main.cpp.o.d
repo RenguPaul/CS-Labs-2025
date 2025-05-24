@@ -155,14 +155,9 @@ CMakeFiles/lab_7.dir/main.cpp.o: \
  /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/Exam/Exam.h \
  /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/FinalExam/FinalExam.h \
  /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/Trial/Trial.h \
- /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MySet/MySet.h \
- /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MyVector/MyVector.h \
- /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
- /usr/include/c++/13/bits/algorithmfwd.h \
- /usr/include/c++/13/bits/stl_heap.h \
- /usr/include/c++/13/bits/uniform_int_dist.h \
- /usr/include/c++/13/bits/stl_tempbuf.h \
- /usr/include/c++/13/pstl/glue_algorithm_defs.h \
- /usr/include/c++/13/pstl/execution_defs.h \
- /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MySet/MySet.h \
- /usr/include/c++/13/limits
+ /home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MyStack/MyStack.h \
+ /usr/include/c++/13/limits /usr/include/c++/13/vector \
+ /usr/include/c++/13/bits/stl_uninitialized.h \
+ /usr/include/c++/13/bits/stl_vector.h \
+ /usr/include/c++/13/bits/stl_bvector.h \
+ /usr/include/c++/13/bits/vector.tcc

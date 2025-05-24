@@ -2,9 +2,10 @@
 #include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/Exam/Exam.h"
 #include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/FinalExam/FinalExam.h"
 #include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/Trial/Trial.h"
-#include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MySet/MySet.h"
+#include "/home/pavel/BAUMAN_PROJECTS/CS-2025-PR/CS-Labs-2025/MyStack/MyStack.h"
 #include <iostream>
 #include <limits>
+#include <vector>
 
 void safeInput(char* buffer, int size) {
     std::cin.getline(buffer, size);
@@ -14,42 +15,62 @@ void safeInput(char* buffer, int size) {
     }
 }
 
-void print(const MySet<Test*>& container) {
-    for (size_t i = 0; i < container.size; ++i) {
-        std::cout << "[" << i << "] ";
-        container.pdata[i]->show();
+void print(const MyStack<Test*>& container) {
+    MyStack<Test*> tempStack = container;
+    std::vector<Test*> elements;
+
+    while (!tempStack.empty()) {
+        elements.push_back(tempStack.top_inf());
+        tempStack.pop();
+    }
+
+    for (int i = elements.size() - 1; i >= 0; --i) {
+        std::cout << "[" << (elements.size() - 1 - i) << "] ";
+        elements[i]->show();
         std::cout << std::endl;
     }
 }
 
-void remove(MySet<Test*>& container, size_t index) {
-    if (index >= container.size) {
+void remove(MyStack<Test*>& container, size_t index) {
+    MyStack<Test*> tempStack;
+    std::vector<Test*> elements;
+
+    while (!container.empty()) {
+        elements.push_back(container.top_inf());
+        container.pop();
+    }
+
+    if (index >= elements.size()) {
         std::cout << "Error: Index out of range\n";
+        for (int i = elements.size() - 1; i >= 0; --i) {
+            container.push(elements[i]);
+        }
         return;
     }
 
-    delete container.pdata[index];
-    container.delete_element(container.pdata[index]);
+    delete elements[elements.size() - 1 - index];
+    elements.erase(elements.begin() + (elements.size() - 1 - index));
+
+    for (int i = elements.size() - 1; i >= 0; --i) {
+        container.push(elements[i]);
+    }
 }
 
-void clear(MySet<Test*>& container) {
-    for (size_t i = 0; i < container.size; ++i) {
-        delete container.pdata[i];
-    }
-    container.size = 0;
-    if (container.max_size > 1) {
-        container.resize(1);
+void clear(MyStack<Test*>& container) {
+    while (!container.empty()) {
+        delete container.top_inf();
+        container.pop();
     }
 }
 
 void demonstrationMode() {
     std::cout << "\n=== DEMONSTRATION MODE ===\n";
 
-    MySet<Test*> tests;
+    MyStack<Test*> tests;
 
-    tests.add_element(new Exam("Midterm Math", 20, "Mathematics", 90));
-    tests.add_element(new FinalExam("Calculus Final", 30, "Mathematics", 180, true));
-    tests.add_element(new Trial("Programming Test", 15, 3));
+    tests.push(new Exam("Midterm Math", 20, "Mathematics", 90));
+    tests.push(new FinalExam("Calculus Final", 30, "Mathematics", 180, true));
+    tests.push(new Trial("Programming Test", 15, 3));
 
     std::cout << "\nAll tests:\n";
     print(tests);
@@ -63,11 +84,11 @@ void demonstrationMode() {
     std::cout << "\nClearing all tests...\n";
     clear(tests);
 
-    std::cout << "\nContainer size after clear: " << tests.size << std::endl;
+    std::cout << "\nContainer size after clear: " << (tests.empty() ? 0 : 1) << std::endl;
 }
 
 void interactiveMode() {
-    MySet<Test*> tests;
+    MyStack<Test*> tests;
     int choice;
     const int BUFFER_SIZE = 100;
     char buffer[BUFFER_SIZE];
@@ -100,7 +121,7 @@ void interactiveMode() {
                 std::cin >> duration;
                 std::cin.ignore();
 
-                tests.add_element(new Exam(name, questions, subject, duration));
+                tests.push(new Exam(name, questions, subject, duration));
                 break;
             }
             case 2: {
@@ -120,7 +141,7 @@ void interactiveMode() {
                 std::cin >> thesis;
                 std::cin.ignore();
 
-                tests.add_element(new FinalExam(name, questions, subject, duration, thesis == 'y' || thesis == 'Y'));
+                tests.push(new FinalExam(name, questions, subject, duration, thesis == 'y' || thesis == 'Y'));
                 break;
             }
             case 3: {
@@ -135,7 +156,7 @@ void interactiveMode() {
                 std::cin >> attempts;
                 std::cin.ignore();
 
-                tests.add_element(new Trial(name, questions, attempts));
+                tests.push(new Trial(name, questions, attempts));
                 break;
             }
             case 4:
