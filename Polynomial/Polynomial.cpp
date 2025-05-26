@@ -213,82 +213,20 @@ std::istream& operator>>(std::istream& is, Polynomial& poly) {
     poly.terms = MyVector<Term>();
     poly.degree = 0;
 
-    char buffer[1024];
-    is.getline(buffer, sizeof(buffer));
+    while (is.peek() == ' ' || is.peek() == '\t') is.get();
 
-    char* current = buffer;
-    while (*current != '\0') {
-        while (*current == ' ' || *current == '\t') current++;
-        if (*current == '\0') break;
-
-        int sign = 1;
-        if (*current == '+') {
-            sign = 1;
-            current++;
-            while (*current == ' ' || *current == '\t') current++;
-        } else if (*current == '-') {
-            sign = -1;
-            current++;
-            while (*current == ' ' || *current == '\t') current++;
-        }
-
-        if (*current == '\0') break;
-
-        char* term_start = current;
-        while (*current != '\0' && *current != '+' && *current != '-') current++;
-
-        char term_buf[256];
-        size_t term_len = current - term_start;
-        strncpy(term_buf, term_start, term_len);
-        term_buf[term_len] = '\0';
-
+    while (is.peek() != '\n' && is.peek() != EOF) {
         Term term;
-        char* ptr = term_buf;
-
-        int coeff = 1;
-        bool has_x = false;
-        if (*ptr != 'x') {
-            coeff = strtol(ptr, &ptr, 10);
-            if (ptr == term_buf) coeff = 1;
-            while (*ptr == ' ' || *ptr == '\t') ptr++;
-        }
-        term.setCoefficient(coeff * sign);
-
-        int exp = 0;
-        if (*ptr == 'x') {
-            has_x = true;
-            ptr++;
-            exp = 1;
-
-            while (*ptr == ' ' || *ptr == '\t') ptr++;
-
-            if (*ptr == '^') {
-                ptr++;
-                while (*ptr == ' ' || *ptr == '\t') ptr++;
-
-                if (*ptr == '-') {
-                    ptr++;
-                    exp = -strtol(ptr, &ptr, 10);
-                } else if (*ptr == '(' && *(ptr+1) == '-') {
-                    ptr += 2;
-                    exp = -strtol(ptr, &ptr, 10);
-                    if (*ptr == ')') ptr++;
-                } else {
-                    exp = strtol(ptr, &ptr, 10);
-                }
-            }
-        }
-
-        if (!has_x && coeff != 0) {
-            exp = 0;
-        }
-
-        term.setExponent(exp);
+        is >> term;
 
         if (term.getCoefficient() != 0) {
             poly.terms.add_element(term);
         }
+
+        while (is.peek() == ' ' || is.peek() == '\t') is.get();
     }
+
+    if (is.peek() == '\n') is.get();
 
     poly.combineLikeTerms();
     return is;
